@@ -1,4 +1,19 @@
-<div class="user"></div>
-    <h2>Hello, WORLD !</h2>
-    <button onclick="window.location='/login';">Login</button>
-</div>
+<html>
+    <head>
+        <link href="../styles/home.scss" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div class="home">
+            <nav class="home-nav"></nav>
+                <button class="home-nav-button" onclick="window.location='/';">Home</button>
+                <button class="home-nav-button" onclick="window.location='/login';">Log in</button>
+                <button class="home-nav-button" onclick="window.location='/';">Log out</button>
+            </nav>
+            
+            <div class="home-app">
+                <h2 class="home-app-title">Home page</h2>
+                <img src="/images/logo-express_js-removebg-preview.png" alt="logo-express_js">
+            </div>
+        </div>
+    </body>
+</html>

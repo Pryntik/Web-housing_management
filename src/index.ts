@@ -12,6 +12,7 @@ const port = 1337;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
