@@ -1,11 +1,12 @@
 import mongoose, { Document, Model } from 'mongoose';
 
+type roles = 'utilisateur' | 'agent' | 'admin';
 // Interface définissant le schéma Animal pour ajouter de la sécurité de type
 export interface IUser extends Document {
   id: number;
   login: string;
   password: string;
-  role: string
+  role: roles;
 }
 
 // Création du schéma Animal
@@ -13,7 +14,7 @@ export const userSchema = new mongoose.Schema<IUser>({
   id: { type: Number, required: true },
   login: { type: String, required: true },
   password: { type: String, required: true },
-  role: { type: String, required: true}
+  role: { type: String, enum: ['utilisateur', 'agent', 'admin'], required: true}
 });
 
 // Création du modèle Animal

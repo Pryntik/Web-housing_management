@@ -1,0 +1,27 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/app/dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/mydatabase
+    depends_on:
+      - mongo
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
+
+  mongo:
+    build:
+      context: .
+      dockerfile: docker/mongo/dockerfile
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
