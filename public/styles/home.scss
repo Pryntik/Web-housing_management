@@ -1,6 +1,29 @@
+.home {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 .home-app {
     background-color: #f0f0f0;
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 60%;
+    height: 60%;
+    margin: auto;
+}
+
+.home-app-title {
+    text-align: center;
+}
+
+.home-app-grid {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.grid-logo {
+    width: 40%;
 }

@@ -1,12 +1,30 @@
-<h1>Sign in</h1>
-<form action="/login/password" method="post">
-    <section>
-        <label for="username">Username</label>
-        <input id="username" name="username" type="text" autocomplete="username" required autofocus>
-    </section>
-    <section>
-        <label for="current-password">Password</label>
-        <input id="current-password" name="password" type="password" autocomplete="current-password" required>
-    </section>
-    <button type="submit">Sign in</button>
-</form>
+<html>
+    <head>
+        <link href="../styles/index.scss" rel="stylesheet" type="text/css">
+        <link href="../styles/navbar.scss" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <nav class="home-nav">
+            <div class="nav-page">
+                <button class="<%=pageName == 'Home' ? 'page-active' : ''%> nav-button" onclick="window.location='/';">Home</button>
+                <button class="<%=pageName == 'About' ? 'page-active' : ''%> nav-button" onclick="window.location='/about';">About</button>
+            </div>
+            <div class="nav-log">
+                <button class="<%=pageName == 'Login' ? 'page-active' : ''%> nav-button" onclick="window.location='/login';">Log in</button>
+                <button class="nav-button" onclick="window.location='/';">Log out</button>
+            </div>
+        </nav>
+        <h1>Sign in</h1>
+        <form action="/login/password" method="post">
+            <section>
+                <label for="username">Username</label>
+                <input id="username" name="username" type="text" autocomplete="username" required autofocus>
+            </section>
+            <section>
+                <label for="current-password">Password</label>
+                <input id="current-password" name="password" type="password" autocomplete="current-password" required>
+            </section>
+            <button type="submit">Sign in</button>
+        </form>
+    </body>
+</html>

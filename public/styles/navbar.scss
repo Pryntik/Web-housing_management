@@ -1,0 +1,41 @@
+.home-nav {
+    background-color: var(--dark-space);
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-active {
+    background-color: var(--light-yellow) !important;
+}
+
+.nav-page {
+    width: 50%;
+    height: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.nav-log {
+    width: 50%;
+    height: 90%;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+.nav-button {
+    width: 20%;
+    height: 80%;
+    border-radius: 5px;
+    background-color: var(--sky-blue);
+    font-size: large;
+    font-weight: bold;
+    color: var(--dark-space);
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}

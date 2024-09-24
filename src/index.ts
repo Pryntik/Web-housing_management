@@ -22,10 +22,17 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.get('/', (req: Request, res: Response) => {
+    app.locals.pageName = "Home";
     res.render('home');
 });
 
+app.get('/about', (req: Request, res: Response) => {
+    app.locals.pageName = "About";
+    res.render('about');
+});
+
 app.get('/login', (req: Request, res: Response) => {
+    app.locals.pageName = "Login";
     res.render('login');
 });
 
@@ -40,6 +47,7 @@ app.post('/login/password', (req: Request, res: Response) => {
     }
     const sessionId = uuidv4();
     sessions[sessionId] = {username, userId: 1};
+    app.locals.pageName = "Home";
     res.render('home');
 });
 
