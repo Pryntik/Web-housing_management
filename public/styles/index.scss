@@ -7,13 +7,23 @@
 
 body {
     margin: 0;
+    min-width: 650px;
 }
 
-.center-block {
+.center-block-60 {
     background-color: var(--light-gray);
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 20px;
     width: 60%;
     height: 60%;
+    margin: auto;
+}
+
+.center-block-40 {
+    background-color: var(--light-gray);
+    padding: 20px;
+    border-radius: 20px;
+    width: 60%;
+    height: 40%;
     margin: auto;
 }

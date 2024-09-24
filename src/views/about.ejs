@@ -2,24 +2,23 @@
     <head>
         <link href="../styles/index.scss" rel="stylesheet" type="text/css">
         <link href="../styles/navbar.scss" rel="stylesheet" type="text/css">
-        <link href="../styles/home.scss" rel="stylesheet" type="text/css">
+        <link href="../styles/app.scss" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <div class="home">
-            <nav class="home-nav">
+        <div class="app">
+            <nav class="navbar">
                 <div class="nav-page">
                     <button class="<%=pageName == 'Home' ? 'page-active' : ''%> nav-button" onclick="window.location='/';">Home</button>
                     <button class="<%=pageName == 'About' ? 'page-active' : ''%> nav-button" onclick="window.location='/about';">About</button>
                 </div>
                 <div class="nav-log">
                     <button class="<%=pageName == 'Login' ? 'page-active' : ''%> nav-button" onclick="window.location='/login';">Log in</button>
-                    <button class="nav-button" onclick="window.location='/';">Log out</button>
                 </div>
             </nav>
             
-            <div class="center-block">
-                <h1 class="home-title"><%=pageName%> page</h1>
-                <div class="home-grid">
+            <div class="center-block-60">
+                <h1 class="app-title"><%=pageName%> page</h1>
+                <div class="app-grid">
                     <img class="grid-logo" src="/images/logo-express_js.png" alt="logo-express_js">
                     <img class="grid-logo" src="/images/logo-mongodb.png" alt="logo-mongodb">
                     <img class="grid-logo" src="/images/logo-TS.png" alt="logo-TS">

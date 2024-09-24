@@ -5,25 +5,24 @@
         <link href="../styles/login.scss" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <nav class="home-nav">
+        <nav class="navbar">
             <div class="nav-page">
                 <button class="<%=pageName == 'Home' ? 'page-active' : ''%> nav-button" onclick="window.location='/';">Home</button>
                 <button class="<%=pageName == 'About' ? 'page-active' : ''%> nav-button" onclick="window.location='/about';">About</button>
             </div>
             <div class="nav-log">
                 <button class="<%=pageName == 'Login' ? 'page-active' : ''%> nav-button" onclick="window.location='/login';">Log in</button>
-                <button class="nav-button" onclick="window.location='/';">Log out</button>
             </div>
         </nav>
-        <div class="center-block">
+        <div class="center-block-40">
             <h1 class="login-title"><%=pageName%> page</h1>
-            <div class="login-form">
-                <form action="/login/check" method="post"></form>
-                    <input id="login" name="login" type="text" autocomplete="login" placeholder="Username" required autofocus>
-                    <input id="current-password" name="password" type="password" autocomplete="current-password" placeholder="Password" required>
-                    <button type="submit">Sign in</button>
+                <form action="/login/check" method="post" class="login-form">
+                    <div class="form-button">
+                        <input id="login" class="form-input form-input-text" name="login" type="text" autocomplete="login" placeholder="Username" required autofocus>
+                        <input id="current-password" class="form-input form-input-text" name="password" type="password" autocomplete="current-password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="form-input form-input-submit">Log in</button>
                 </form>
-            </div>
         </div>
     </body>
 </html>

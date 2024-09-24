@@ -1,4 +1,4 @@
-.home-nav {
+.navbar {
     background-color: var(--dark-space);
     height: 10%;
     display: flex;
@@ -38,4 +38,5 @@
     margin-left: 5px;
     margin-right: 5px;
     cursor: pointer;
+    text-align: center;
 }
