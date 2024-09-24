@@ -1,29 +1,23 @@
-import passport from 'passport';
 import './passport-config';
+import passport from 'passport';
 import session from 'express-session';
-import { Strategy as LocalStrategy } from 'passport-local';
-import express, { Request, Response } from 'express';
+import express from 'express';
 import path from 'path';
-import { v4 as uuidv4 } from 'uuid';
-import { SessionType } from './types/TSession';
-import { IUser, UserModel } from './mongoose_user';
 import mongoose from 'mongoose';
 import { about, accueil, erreur, login } from './controlleur/controlleur';
 import { verifConnexion } from './controlleur/user_controlleur';
-import { config } from 'process';
 import { ensureAuthenticated } from './passport-config';
 
 /* Initialisation du serveur */
 export const app = express();
-const sessions: SessionType = {};
 const port = 3000;
 
 // Connexion à MongoDB
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/mydatabase', {
-}).then(() => {
-    console.log('Connexion à MongoDB réussie');
-}).catch((error) => {
-    console.error('Erreur de connexion à MongoDB :', error);
+    }).then(() => {
+        console.log('Connexion à MongoDB réussie');
+    }).catch((error) => {
+        console.error('Erreur de connexion à MongoDB :', error);
 });
 
 // Configuration de la session
@@ -52,7 +46,7 @@ app.get('/', accueil);
 app.get('/about', about);
 app.get('/login', login);
 app.get('/erreur', erreur);
-app.post('/login/password', verifConnexion);
+app.post('/login/check', verifConnexion);
 app.get('/annonceModif', ensureAuthenticated) //modifAnnonce); // A FAIRE
 
 //Crée Utilisateur
@@ -75,7 +69,7 @@ app.get('/annonceModif', ensureAuthenticated) //modifAnnonce); // A FAIRE
   createUser();
   res.render('erreur');
 });*/
-/*app.post('/login/password', async (req: Request, res: Response) => {
+/*app.post('/login/check', async (req: Request, res: Response) => {
   const { login, password } = req.body;
 
   try {

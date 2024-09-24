@@ -4,20 +4,11 @@
     flex-direction: column;
 }
 
-.home-app {
-    background-color: #f0f0f0;
-    padding: 20px;
-    border-radius: 5px;
-    width: 60%;
-    height: 60%;
-    margin: auto;
-}
-
-.home-app-title {
+.home-title {
     text-align: center;
 }
 
-.home-app-grid {
+.home-grid {
     display: flex;
     flex-direction: row;
     justify-content: space-around;

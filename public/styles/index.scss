@@ -2,8 +2,18 @@
     --dark-space: #182030;
     --sky-blue: #90d5ff;
     --light-yellow: #fff18d;
+    --light-gray: #f0f0f0;
 }
 
 body {
     margin: 0;
+}
+
+.center-block {
+    background-color: var(--light-gray);
+    padding: 20px;
+    border-radius: 5px;
+    width: 60%;
+    height: 60%;
+    margin: auto;
 }
