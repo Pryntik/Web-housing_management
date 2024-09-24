@@ -12,7 +12,6 @@ export interface IImage {
 
 // Interface pour une question posée par un utilisateur
 export interface IQuestion {
-    id: number;
     user: IUser;
     contenu: string;
     reponses: IReponse[];
@@ -21,7 +20,6 @@ export interface IQuestion {
 
 // Interface pour une réponse fournie par un agent immobilier
 export interface IReponse {
-    id: number;
     user: IUser;
     contenu: string;
     date: Date;
@@ -29,7 +27,6 @@ export interface IReponse {
 
 // Interface pour une annonce immobilière
 export interface IAnnonceImmobiliere {
-    id: string;
     titre: string;
     typeBien: TypeBien;
     statutPublication: StatutPublication;

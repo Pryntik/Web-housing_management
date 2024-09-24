@@ -1,6 +1,6 @@
 export type SessionType = {
     [key: string]: {
-        username: string,
-        userId: number,        
+        login: string,
+        id: string,        
     }
 }

@@ -3,7 +3,6 @@ import mongoose, { Document, Model } from 'mongoose';
 type roles = 'utilisateur' | 'agent' | 'admin';
 // Interface définissant le schéma Animal pour ajouter de la sécurité de type
 export interface IUser extends Document {
-  id: number;
   login: string;
   password: string;
   role: roles;
@@ -11,23 +10,23 @@ export interface IUser extends Document {
 
 // Création du schéma Animal
 export const userSchema = new mongoose.Schema<IUser>({
-  id: { type: Number, required: true },
   login: { type: String, required: true },
   password: { type: String, required: true },
   role: { type: String, enum: ['utilisateur', 'agent', 'admin'], required: true}
-});
+
+}, {timestamps: true});
 
 // Création du modèle Animal
-const User: Model<IUser> = mongoose.model<IUser>('User', userSchema);
+export const UserModel: Model<IUser> = mongoose.model<IUser>('user', userSchema);
 
 // Création d'un nouvel objet
-const user = new User({ id: 1, login: 'admin', password: 'admin', role: "admin" });
+/*const user = new User({ id: 1, login: 'admin', password: 'admin', role: "admin" });
 user.save();
 
 (async () => {
   try {
     // Connexion à la base de données MongoDB
-    await mongoose.connect('mongodb://localhost:27017/test', {
+    await mongoose.connect('mongodb://localhost:27017/mydatabase', {
     });
     console.log('MongoDB Connected');
 
@@ -66,4 +65,4 @@ user.save();
       console.error('Error disconnecting MongoDB:', err);
     }
   }
-})();
+})();*/

@@ -1,14 +1,41 @@
 import passport from 'passport';
+import './passport-config';
+import session from 'express-session';
+import { Strategy as LocalStrategy } from 'passport-local';
 import express, { Request, Response } from 'express';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
-import { Strategy as LocalStrategy } from 'passport-local';
 import { SessionType } from './types/TSession';
+import { IUser, UserModel } from './mongoose_user';
+import mongoose from 'mongoose';
+import { about, accueil, erreur, login } from './controlleur/controlleur';
+import { verifConnexion } from './controlleur/user_controlleur';
+import { config } from 'process';
+import { ensureAuthenticated } from './passport-config';
 
 /* Initialisation du serveur */
-const app = express();
+export const app = express();
 const sessions: SessionType = {};
-const port = 1337;
+const port = 3000;
+
+// Connexion à MongoDB
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/mydatabase', {
+}).then(() => {
+    console.log('Connexion à MongoDB réussie');
+}).catch((error) => {
+    console.error('Erreur de connexion à MongoDB :', error);
+});
+
+// Configuration de la session
+app.use(session({
+  secret: 'secret', // Change cela pour un secret plus sûr
+  resave: false,
+  saveUninitialized: true,
+}));
+
+// Initialiser Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -21,67 +48,62 @@ app.listen(port, () => {
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.get('/', (req: Request, res: Response) => {
-    app.locals.pageName = "Home";
-    res.render('home');
-});
+app.get('/', accueil);
+app.get('/about', about);
+app.get('/login', login);
+app.get('/erreur', erreur);
+app.post('/login/password', verifConnexion);
+app.get('/annonceModif', ensureAuthenticated) //modifAnnonce); // A FAIRE
 
-app.get('/about', (req: Request, res: Response) => {
-    app.locals.pageName = "About";
-    res.render('about');
-});
+//Crée Utilisateur
+/*async function createUser() {
+  const newUser = new UserModel({
+      login: 'user3',
+      password: 'password3',
+      role: 'utilisateur' // ou 'agent', 'admin'
+  });
 
-app.get('/login', (req: Request, res: Response) => {
-    app.locals.pageName = "Login";
-    res.render('login');
-});
-
-app.get('/erreur', (req: Request, res: Response) => {
-    res.render('erreur');
-});
-
-app.post('/login/password', (req: Request, res: Response) => {
-    const{username, password} = req.body;
-    if (username !== 'admin' || password !== 'admin') {
-        res.status(401).render('erreur');
-    }
-    const sessionId = uuidv4();
-    sessions[sessionId] = {username, userId: 1};
-    app.locals.pageName = "Home";
-    res.render('home');
-});
-
-// Authentification avec Passport.js
-passport.use(new LocalStrategy(
-    (username, password, done) => {
-      // Exemple de validation utilisateur
-      if (username === 'admin' && password === 'secret') {
-        return done(null, { id: 1, username: 'admin' });
-      }
-      else {
-        return done(null, false, { message: 'Identifiants incorrects' });
-      }
-    }
-));
-
-// Exemple de requêtes HTTP avec Express
-/*app.get('/advert/:id?', (req: Request, res: Response) => {
-    const id = req.params.id;
-    res.send(`Vous avez demandé l'annonce avec l'id : ${id}`);
-})
-
-.get('/search', (req: Request, res: Response) => {
-    const query = req.query.q;
-    console.log('Requête de recherche : ' + query);
-    res.send('Résultats de la recherche');
+  try {
+      const savedUser = await newUser.save();
+      console.log('Utilisateur créé avec succès :', savedUser);
+  } catch (error) {
+      console.error('Erreur lors de la création de l\'utilisateur :', error);
+  }
+}*/
+// Crée Utilisateur
+/*app.post('/createUser', (req: Request, res: Response) => {
+  createUser();
+  res.render('erreur');
 });*/
+/*app.post('/login/password', async (req: Request, res: Response) => {
+  const { login, password } = req.body;
 
-  // Exemple de route qui utilise EJS pour rendre une vue
-/*app.get('/user/:id', (req: Request, res: Response) => {
-    const user = { id: req.params.id, name: 'Tom' };
-    res.render('hello_user', { user });
-  });*/
+  try {
+      console.log("Login reçu du formulaire : ", login);
 
-app.use(require('express-session')({ secret: 'secret', resave: false, saveUninitialized: false }));
-app.use(passport.initialize());
-app.use(passport.session());
+      // Rechercher l'utilisateur dans la base de données (insensible à la casse)
+      const utilisateur = await UserModel.find().where({ 'login': login   });
+
+      console.log("Utilisateur trouvé : ", utilisateur);
+
+      // Vérifier si l'utilisateur existe
+      /*if (!utilisateur) {
+          return res.status(401).render('erreur', { message: 'Utilisateur non trouvé.' });
+      }
+
+      // Vérifier si le mot de passe correspond
+      if (utilisateur.password !== password) {
+          return res.status(401).render('erreur', { message: 'Mot de passe incorrect.' });
+      }
+
+      // Si les identifiants sont valides, générer une session
+      const sessionId = uuidv4();
+      sessions[sessionId] = { login: utilisateur.login, id: String(utilisateur._id) };
+
+      // Rediriger vers la page d'accueil
+      res.render('home');
+  } catch (error) {
+      console.error('Erreur lors de la connexion :', error);
+      res.status(500).send('Erreur interne du serveur.');
+  }
+});*/
