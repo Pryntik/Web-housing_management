@@ -1,13 +1,14 @@
 import mongoose, { Document, Model } from 'mongoose';
 import { IUser } from './mongoose_user';
-// Type pour le statut de publication et le statut du bien
+
+// Types pour le statut de publication et le statut du bien
 type StatutPublication = 'publiee' | 'non publiee';
 type StatutBien = 'disponible' | 'loue' | 'vendu';
 type TypeBien = 'vente' | 'location';
 
 export interface IImage {
     data: Buffer;
-    contentType: String;
+    contentType: string;
 }
 
 // Interface pour une question posée par un utilisateur
@@ -26,7 +27,7 @@ export interface IReponse {
 }
 
 // Interface pour une annonce immobilière
-export interface IAnnonceImmobiliere {
+export interface IAnnonceImmobiliere extends Document {
     titre: string;
     typeBien: TypeBien;
     statutPublication: StatutPublication;
@@ -48,29 +49,30 @@ export const AnnonceSchema = new mongoose.Schema({
     description: { type: String, required: true },
     prix: { type: Number, required: true },
     dateDisponibilite: { type: Date, required: true },
-    photos: { 
-                data: { type: Buffer, required: true},
-                contentType: { type: String, required: true}
-    },
+    photos: [{
+        data: { type: Buffer, required: true },
+        contentType: { type: String, required: true }
+    }],
     questions: [
         {
             user: {
-                login: { type:String, required: true },
-                roles: { type: [String],}
+                login: { type: String, required: true },
+                roles: { type: [String] }
             },
-            content: { type: String, required: true},
-            reponses:
-                [{ 
+            contenu: { type: String, required: true },
+            reponses: [
+                {
                     user: {
-                        login: { type:String, required: true },
-                        roles: { type: [String], required: true}
+                        login: { type: String, required: true },
+                        roles: { type: [String], required: true }
                     },
-                    content: { String, required: true},
-                    date: { type: Date, default: Date.now}
-                }],
-            date: { type: Date, default: Date.now}
+                    contenu: { type: String, required: true },
+                    date: { type: Date, default: Date.now }
+                }
+            ],
+            date: { type: Date, default: Date.now }
         }
-    ],
+    ]
 });
 
-export const Annonce = mongoose.model<IAnnonceImmobiliere & Document>('Annonce', AnnonceSchema);
+export const AnnonceModel = mongoose.model<IAnnonceImmobiliere>('Annonce', AnnonceSchema);

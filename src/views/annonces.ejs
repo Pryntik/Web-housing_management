@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <link href="../styles/index.scss" rel="stylesheet" type="text/css">
+        <link href="../styles/navbar.scss" rel="stylesheet" type="text/css">
+        <link href="../styles/login.scss" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="nav-page">
+                <button class="<%=pageName == 'Home' ? 'page-active' : ''%> nav-button" onclick="window.location='/';">Home</button>
+                <button class="<%=pageName == 'About' ? 'page-active' : ''%> nav-button" onclick="window.location='/about';">About</button>
+            </div>
+            <div class="nav-log">
+                <button class="<%=pageName == 'Login' ? 'page-active' : ''%> nav-button" onclick="window.location='/login';">Log in</button>
+                <button class="<%=pageName == 'creerAnnonce' ? 'page-active' : ''%> nav-button" onclick="window.location='/creerAnnonce';">Creer une Annonce</button>
+            </div>
+        </nav>
+        <div class="center-block-40">
+            <h1 class="login-title"><%=pageName%> page</h1>
+                <form action="/creerAnnonce/ajoutAnnonce" method="post" class="login-form" enctype="multipart/form-data">
+                    <div class="form-button">
+                        <input id="titre" class="form-input form-input-text" name="titre" type="text" autocomplete="titre" placeholder="Titre de l'annonce" required autofocus>
+                        <label for="typeBien">Type de bien :</label>
+                        <select id="typeBien" name="typeBien" required>
+                            <option value="vente" <%= typeof annonce !== 'undefined' && annonce.typeBien === 'vente' ? 'selected' : '' %>>Vente</option>
+                            <option value="location" <%= typeof annonce !== 'undefined' && annonce.typeBien === 'location' ? 'selected' : '' %>>Location</option>
+                        </select>
+                        <label for="statutPublication">Statut de publication :</label>
+                        <select id="statutPublication" name="statutPublication" required>
+                            <option value="publiee" <%= typeof annonce !== 'undefined' && annonce.statutPublication === 'publiee' ? 'selected' : '' %>>Publiée</option>
+                            <option value="non publiee" <%= typeof annonce !== 'undefined' && annonce.statutPublication === 'non publiee' ? 'selected' : '' %>>Non Publiée</option>
+                        </select>
+                        <label for="statutBien">Statut du bien :</label>
+                        <select id="statutBien" name="statutBien" required>
+                            <option value="disponible" <%= typeof annonce !== 'undefined' && annonce.statutBien === 'disponible' ? 'selected' : '' %>>Disponible</option>
+                            <option value="loue" <%= typeof annonce !== 'undefined' && annonce.statutBien === 'loue' ? 'selected' : '' %>>Loué</option>
+                            <option value="vendu" <%= typeof annonce !== 'undefined' && annonce.statutBien === 'vendu' ? 'selected' : '' %>>Vendu</option>
+                        </select>
+                        <label for="description">Description :</label>
+                        <textarea id="description" name="description" rows="5" cols="30" required><%= typeof annonce !== 'undefined' ? annonce.description : '' %></textarea>
+                        <label for="prix">Prix :</label>
+                        <input type="number" id="prix" name="prix" value="<%= typeof annonce !== 'undefined' ? annonce.prix : '' %>" required>
+                        <label for="dateDisponibilite">Date de disponibilité :</label>
+                        <input type="date" id="dateDisponibilite" name="dateDisponibilite" value="<%= typeof annonce !== 'undefined' ? annonce.dateDisponibilite.toISOString().substring(0, 10) : '' %>" required>
+                        <label for="photos">Photos (facultatif) :</label>
+                        <input type="file" name="photos"  multiple />
+                    </div>
+                    <button type="submit" class="form-input form-input-submit">Valider l'annonce</button>
+                </form>
+        </div>
+    </body>
+</html>

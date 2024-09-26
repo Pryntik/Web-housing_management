@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import { UserModel, IUser } from './mongoose_user';
-import { Request, Response, NextFunction } from 'express';
+import { IUser, RoleType, UserModel} from './mongoose_user';
+import { Response, Request, NextFunction } from 'express';
 
 // Configurer la stratégie locale
 passport.use(new LocalStrategy(
@@ -43,10 +43,25 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-export const ensureAuthenticated = (req: any, res: any, next: any) => {
+// Vérification que l'utilisateur est connecté (Utiliser comme Middleware pour être sûr que l'utilisateur est en premier lieu connecté)
+export const ensureAuthenticated = (req: Request, res: Response, next: NextFunction) => {
     if(!req.isAuthenticated()){
         res.redirect('/login');
+    } else {
+        next();
     }
 }
+
+// Vérification que l'utilisateur est connecté et qu'il possède le bon rôle (Utiliser comme Middleware pour être sûr que l'utilisateur peut accéder à certaines fonctionnalitées)
+export const verifRole = (role: string) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+      const user = req.user as IUser;
+      if (req.isAuthenticated() && (user.role.includes(role) || user.role.includes('admin'))) {
+          return next();
+      } else {
+          res.status(403).send('Accès interdit : rôle insuffisant');
+      }
+  };
+};
 
 

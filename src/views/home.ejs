@@ -1,23 +1,45 @@
 <html>
-    <head>
-        <link href="../styles/index.scss" rel="stylesheet" type="text/css">
-        <link href="../styles/navbar.scss" rel="stylesheet" type="text/css">
-        <link href="../styles/app.scss" rel="stylesheet" type="text/css">
-    </head>
-    <body>
-        <div class="app">
-            <nav class="navbar">
-                <div class="nav-page">
-                    <button class="<%=pageName == 'Home' ? 'page-active' : ''%> nav-button" onclick="window.location='/';">Home</button>
-                    <button class="<%=pageName == 'About' ? 'page-active' : ''%> nav-button" onclick="window.location='/about';">About</button>
-                </div>
-                <div class="nav-log">
-                    <button class="<%=pageName == 'Login' ? 'page-active' : ''%> nav-button" onclick="window.location='/login';">Log in</button>
-                </div>
-            </nav>
-            <div class="center-block-60">
-                <h1 class="app-title"><%=pageName%> page</h1>
+<head>
+    <link href="../styles/index.scss" rel="stylesheet" type="text/css">
+    <link href="../styles/navbar.scss" rel="stylesheet" type="text/css">
+    <link href="../styles/app.scss" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="app">
+        <nav class="navbar">
+            <div class="nav-page">
+                <button class="<%=pageName == 'Home' ? 'page-active' : ''%> nav-button" onclick="window.location='/';">Home</button>
+                <button class="<%=pageName == 'About' ? 'page-active' : ''%> nav-button" onclick="window.location='/about';">About</button>
+            </div>
+            <div class="nav-log">
+                <button class="<%=pageName == 'Login' ? 'page-active' : ''%> nav-button" onclick="window.location='/login';">Log in</button>
+                <button class="<%=pageName == 'creerAnnonce' ? 'page-active' : ''%> nav-button" onclick="window.location='/creerAnnonce';">Creer une Annonce</button>
+            </div>
+        </nav>
+        <div class="center-block-60">
+            <h1 class="app-title"><%=pageName%> page</h1>
+            <div class="annonces-list">
+                <% if (annonces && annonces.length > 0) { %>
+                    <h2>Mes Annonces :</h2>
+                    <ul>
+                        <% annonces.forEach(function(annonce) { %>
+                            <li>
+                                <h3><%= annonce.titre %></h3>
+                                <p>Type: <%= annonce.typeBien %></p>
+                                <p>Description: <%= annonce.description %></p>
+                                <p>Prix: <%= annonce.prix %> €</p>
+                                <p>Statut: <%= annonce.statutPublication %></p>
+                                <% if (annonce.photos.length > 0) { %>
+                                    <img src="data:<%= annonce.photos[0].contentType %>;base64,<%= annonce.photos[0].data.toString('base64') %>" alt="<%= annonce.titre %>" />
+                                <% } %>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } else { %>
+                    <p>Aucune annonce publiée.</p>
+                <% } %>
             </div>
         </div>
-    </body>
+    </div>
+</body>
 </html>

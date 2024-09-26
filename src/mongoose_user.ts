@@ -1,14 +1,14 @@
 import mongoose, { Document, Model } from 'mongoose';
 
-type RoleType = 'utilisateur' | 'agent' | 'admin';
-// Interface définissant le schéma Animal pour ajouter de la sécurité de type
+export type RoleType = 'utilisateur' | 'agent' | 'admin';
+// Interface définissant le schéma User
 export interface IUser extends Document {
   login: string;
   password: string;
   role: RoleType;
 }
 
-// Création du schéma Animal
+// Création du schéma User
 export const userSchema = new mongoose.Schema<IUser>({
   login: { type: String, required: true },
   password: { type: String, required: true },
@@ -16,5 +16,5 @@ export const userSchema = new mongoose.Schema<IUser>({
 
 }, {timestamps: true});
 
-// Création du modèle Animal
+// Création du modèle UserModel
 export const UserModel: Model<IUser> = mongoose.model<IUser>('user', userSchema);

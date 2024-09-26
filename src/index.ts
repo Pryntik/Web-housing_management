@@ -1,16 +1,22 @@
-import './passport-config';
 import passport from 'passport';
 import session from 'express-session';
 import express from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
-import { about, accueil, erreur, login } from './controlleur/controlleur';
+import multer from 'multer';
+import { about, accueil, erreur, login, creaAnnonce } from './controlleur/controlleur';
 import { verifConnexion } from './controlleur/user_controlleur';
-import { ensureAuthenticated } from './passport-config';
+import { ensureAuthenticated, verifRole } from './passport-config';
+import { UserModel } from './mongoose_user';
+import { ajoutAnnonce } from './controlleur/annonce_controlleur';
 
 /* Initialisation du serveur */
 export const app = express();
 const port = 3000;
+
+// Configure multer pour gérer les fichiers
+const storage = multer.memoryStorage(); // Utiliser memoryStorage pour garder les fichiers en mémoire
+const upload = multer({ storage: storage });
 
 // Connexion à MongoDB
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/mydatabase', {
@@ -47,14 +53,16 @@ app.get('/about', about);
 app.get('/login', login);
 app.get('/erreur', erreur);
 app.post('/login/check', verifConnexion);
-app.get('/annonceModif', ensureAuthenticated) //modifAnnonce); // A FAIRE
+app.get('/creerAnnonce', ensureAuthenticated, verifRole('agent'), creaAnnonce); 
+app.post('/creerAnnonce/ajoutAnnonce', ensureAuthenticated , ajoutAnnonce); //checkRole, modifierAnnonce); // A FAIRE
 
-//Crée Utilisateur
+// Création des Utilisateurs (Utilisation de Postman pour crée les user directement sans utiliser de route crée)
+//app.post('/createUser', createUser);
 /*async function createUser() {
   const newUser = new UserModel({
-      login: 'user3',
-      password: 'password3',
-      role: 'utilisateur' // ou 'agent', 'admin'
+      login: 'user2',
+      password: 'password2',
+      role: 'admin' // ou 'agent', 'admin'
   });
 
   try {
@@ -64,40 +72,3 @@ app.get('/annonceModif', ensureAuthenticated) //modifAnnonce); // A FAIRE
       console.error('Erreur lors de la création de l\'utilisateur :', error);
   }
 }*/
-// Crée Utilisateur
-/*app.post('/createUser', (req: Request, res: Response) => {
-  createUser();
-  res.render('erreur');
-});*/
-/*app.post('/login/check', async (req: Request, res: Response) => {
-  const { login, password } = req.body;
-
-  try {
-      console.log("Login reçu du formulaire : ", login);
-
-      // Rechercher l'utilisateur dans la base de données (insensible à la casse)
-      const utilisateur = await UserModel.find().where({ 'login': login   });
-
-      console.log("Utilisateur trouvé : ", utilisateur);
-
-      // Vérifier si l'utilisateur existe
-      /*if (!utilisateur) {
-          return res.status(401).render('erreur', { message: 'Utilisateur non trouvé.' });
-      }
-
-      // Vérifier si le mot de passe correspond
-      if (utilisateur.password !== password) {
-          return res.status(401).render('erreur', { message: 'Mot de passe incorrect.' });
-      }
-
-      // Si les identifiants sont valides, générer une session
-      const sessionId = uuidv4();
-      sessions[sessionId] = { login: utilisateur.login, id: String(utilisateur._id) };
-
-      // Rediriger vers la page d'accueil
-      res.render('home');
-  } catch (error) {
-      console.error('Erreur lors de la connexion :', error);
-      res.status(500).send('Erreur interne du serveur.');
-  }
-});*/
