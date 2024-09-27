@@ -1,22 +1,26 @@
 <html>
 <head>
-    <link href="../styles/index.scss" rel="stylesheet" type="text/css">
-    <link href="../styles/navbar.scss" rel="stylesheet" type="text/css">
-    <link href="../styles/app.scss" rel="stylesheet" type="text/css">
+    <link href="../styles/master.scss" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div class="app">
-        <nav class="navbar">
+        <nav class="navBar">
             <div class="nav-page">
                 <button class="<%=pageName == 'Home' ? 'page-active' : ''%> nav-button" onclick="window.location='/';">Home</button>
                 <button class="<%=pageName == 'About' ? 'page-active' : ''%> nav-button" onclick="window.location='/about';">About</button>
             </div>
             <div class="nav-log">
                 <button class="<%=pageName == 'Login' ? 'page-active' : ''%> nav-button" onclick="window.location='/login';">Log in</button>
-                <button class="<%=pageName == 'creerAnnonce' ? 'page-active' : ''%> nav-button" onclick="window.location='/creerAnnonce';">Creer une Annonce</button>
+                <button class="<%=pageName == 'addNews' ? 'page-active' : ''%> nav-button" onclick="window.location='/addNews';">Nouvelle annonce</button>
             </div>
         </nav>
-        <div class="center-block-60">
+        <div class="logBar">
+            <div class="logStatus">
+                <span class="log-text"><%=logStatus == true ? 'Connected' : 'Disconnected'%></span>
+                <img class="log-icon" src="<%=logStatus == true ? '/images/logo-connected.png' : '/images/logo-disconnected.png'%>" alt="log-icon">
+            </div>
+        </div>
+        <div class="center-gray-block w60 h60">
             <h1 class="app-title"><%=pageName%> page</h1>
             <div class="annonces-list">
                 <% if (annonces && annonces.length > 0) { %>

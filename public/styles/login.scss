@@ -1,3 +1,18 @@
+.logStatus {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.log-icon {
+    width: 30px;
+}
+
+.log-text {
+    font-size: medium;
+    margin-right: 5px;
+}
+
 .login-form {
     display: flex;
     flex-direction: column;
@@ -15,13 +30,14 @@
 }
 
 .form-input {
-    width: 400px;
     height: 40px;
     border-radius: 10px;
 }
 
 .form-input-text {
     margin-bottom: 30px;
+    max-width: 400px;
+    min-width: 200px;
 }
 
 .form-input-submit {

@@ -1,4 +1,5 @@
 import passport from "passport";
+import { app } from "..";
 import { Response, Request, NextFunction } from "express";
 import { UserModel } from "../mongoose_user";
 
@@ -14,7 +15,8 @@ export const verifConnexion = async(req: Request, res: Response, next: NextFunct
         const verifUser = await UserModel.findOne({login: login});
         if(!verifUser) {
             console.log("Aucun Utilisateur existant");
-            return res.redirect('/erreur');
+            app.locals.errorContent = "Aucun Utilisateur existant";
+            return res.redirect('/error');
         }
 
         // Utilisation de la méthode authenticate de passportJS 
@@ -24,7 +26,8 @@ export const verifConnexion = async(req: Request, res: Response, next: NextFunct
             }
             if (!verifUser) {
                 console.log("Identifiant ou Mot de pas Incorrect");
-                return res.redirect('/erreur');
+                app.locals.errorContent = "Identifiant ou Mot de pas Incorrect";
+                return res.redirect('/error');
             }
 
             // Si le User est bien dans la base de données on le connecte ce qui met le cookie dans le navigateur et permet de faire les autres actions

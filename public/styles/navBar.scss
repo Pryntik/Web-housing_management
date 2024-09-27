@@ -1,4 +1,4 @@
-.navbar {
+.navBar {
     background-color: var(--dark-space);
     height: 10%;
     display: flex;
@@ -39,4 +39,5 @@
     margin-right: 5px;
     cursor: pointer;
     text-align: center;
+    min-width: fit-content;
 }

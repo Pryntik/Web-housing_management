@@ -7,7 +7,7 @@ import multer from 'multer';
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-export const ajoutAnnonce = [
+export const uploadNews = [
     upload.array('photos'), // Middleware pour gérer les images
     async (req: Request, res: Response, next: NextFunction) => {
         try {

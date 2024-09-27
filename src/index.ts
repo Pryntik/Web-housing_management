@@ -4,14 +4,14 @@ import express from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
 import multer from 'multer';
-import { about, accueil, erreur, login, creaAnnonce } from './controlleur/controlleur';
+import { home, about, error, login, creaAnnonce } from './controlleur/controlleur';
 import { verifConnexion } from './controlleur/user_controlleur';
 import { ensureAuthenticated, verifRole } from './passport-config';
-import { UserModel } from './mongoose_user';
-import { ajoutAnnonce } from './controlleur/annonce_controlleur';
+import { uploadNews } from './controlleur/annonce_controlleur';
 
 /* Initialisation du serveur */
 export const app = express();
+export let logStatus = false;
 const port = 3000;
 
 // Configure multer pour gérer les fichiers
@@ -28,9 +28,9 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/mydatabase'
 
 // Configuration de la session
 app.use(session({
-  secret: 'secret', // Change cela pour un secret plus sûr
-  resave: false,
-  saveUninitialized: true,
+    secret: 'secret', // Change cela pour un secret plus sûr
+    resave: false,
+    saveUninitialized: true,
 }));
 
 // Initialiser Passport
@@ -48,13 +48,13 @@ app.listen(port, () => {
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.get('/', accueil);
+app.get('/', home);
 app.get('/about', about);
 app.get('/login', login);
-app.get('/erreur', erreur);
+app.get('/error', error);
 app.post('/login/check', verifConnexion);
-app.get('/creerAnnonce', ensureAuthenticated, verifRole('agent'), creaAnnonce); 
-app.post('/creerAnnonce/ajoutAnnonce', ensureAuthenticated , ajoutAnnonce); //checkRole, modifierAnnonce); // A FAIRE
+app.get('/addNews', ensureAuthenticated, verifRole('agent'), creaAnnonce); 
+app.post('/addNews/uploadNews', ensureAuthenticated , uploadNews); //checkRole, modifierAnnonce); // A FAIRE
 
 // Création des Utilisateurs (Utilisation de Postman pour crée les user directement sans utiliser de route crée)
 //app.post('/createUser', createUser);

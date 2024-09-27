@@ -20,15 +20,9 @@
                     <img class="log-icon" src="<%=logStatus == true ? '/images/logo-connected.png' : '/images/logo-disconnected.png'%>" alt="log-icon">
                 </div>
             </div>
-            <div class="center-gray-block w40 h40">
-                <h1 class="login-title"><%=pageName%> page</h1>
-                    <form action="/login/check" method="post" class="login-form">
-                        <div class="form-button">
-                            <input id="login" class="form-input form-input-text w50" name="login" type="text" autocomplete="login" placeholder="Username" required autofocus>
-                            <input id="current-password" class="form-input form-input-text w50" name="password" type="password" autocomplete="current-password" placeholder="Password" required>
-                        </div>
-                        <button type="submit" class="form-input form-input-submit">Log in</button>
-                    </form>
+            <div class="center-gray-block w60 h60">
+                <h1 class="app-title"><%=pageName%></h1>
+                <p><%=errorContent%></p>
             </div>
         </div>
     </body>
