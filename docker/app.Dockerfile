@@ -9,8 +9,6 @@
 
  RUN npm install -g typescript ts-node 
 
-
-
  # Installer les dépendances
  RUN npm install
  

@@ -16,7 +16,6 @@
 .login-form {
     display: flex;
     flex-direction: column;
-    height: 60%;
 }
 
 .login-title {
@@ -44,4 +43,5 @@
     width: 100px;
     align-self: flex-end;
     background-color: var(--sky-blue);
+    cursor: pointer;
 }

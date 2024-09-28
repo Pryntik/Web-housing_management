@@ -7,11 +7,12 @@
             <nav class="navBar">
                 <div class="nav-page">
                     <button class="<%=pageName == 'Home' ? 'page-active' : ''%> nav-button" onclick="window.location='/';">Home</button>
+                    <button class="<%=pageName == 'Addnews' ? 'page-active' : ''%> nav-button" onclick="window.location='/addnews';">Nouvelle annonce</button>
                     <button class="<%=pageName == 'About' ? 'page-active' : ''%> nav-button" onclick="window.location='/about';">About</button>
                 </div>
                 <div class="nav-log">
+                    <button class="<%=pageName == 'Signup' ? 'page-active' : ''%> nav-button" onclick="window.location='/signup';">Sign up</button>
                     <button class="<%=pageName == 'Login' ? 'page-active' : ''%> nav-button" onclick="window.location='/login';">Log in</button>
-                    <button class="<%=pageName == 'addNews' ? 'page-active' : ''%> nav-button" onclick="window.location='/addNews';">Nouvelle annonce</button>
                 </div>
             </nav>
             <div class="logBar">
@@ -25,7 +26,7 @@
                     <form action="/login/check" method="post" class="login-form">
                         <div class="form-button">
                             <input id="login" class="form-input form-input-text w50" name="login" type="text" autocomplete="login" placeholder="Username" required autofocus>
-                            <input id="current-password" class="form-input form-input-text w50" name="password" type="password" autocomplete="current-password" placeholder="Password" required>
+                            <input id="password" class="form-input form-input-text w50" name="password" type="password" autocomplete="password" placeholder="Password" required>
                         </div>
                         <button type="submit" class="form-input form-input-submit">Log in</button>
                     </form>

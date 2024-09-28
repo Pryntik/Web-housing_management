@@ -7,11 +7,12 @@
             <nav class="navBar">
                 <div class="nav-page">
                     <button class="<%=pageName == 'Home' ? 'page-active' : ''%> nav-button" onclick="window.location='/';">Home</button>
+                    <button class="<%=pageName == 'Addnews' ? 'page-active' : ''%> nav-button" onclick="window.location='/addnews';">Nouvelle annonce</button>
                     <button class="<%=pageName == 'About' ? 'page-active' : ''%> nav-button" onclick="window.location='/about';">About</button>
                 </div>
                 <div class="nav-log">
+                    <button class="<%=pageName == 'Signup' ? 'page-active' : ''%> nav-button" onclick="window.location='/signup';">Sign up</button>
                     <button class="<%=pageName == 'Login' ? 'page-active' : ''%> nav-button" onclick="window.location='/login';">Log in</button>
-                    <button class="<%=pageName == 'addNews' ? 'page-active' : ''%> nav-button" onclick="window.location='/addNews';">Nouvelle annonce</button>
                 </div>
             </nav>
             <div class="logBar">

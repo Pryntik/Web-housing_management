@@ -6,11 +6,12 @@
         <nav class="navBar">
             <div class="nav-page">
                 <button class="<%=pageName == 'Home' ? 'page-active' : ''%> nav-button" onclick="window.location='/';">Home</button>
+                <button class="<%=pageName == 'Addnews' ? 'page-active' : ''%> nav-button" onclick="window.location='/addnews';">Nouvelle annonce</button>
                 <button class="<%=pageName == 'About' ? 'page-active' : ''%> nav-button" onclick="window.location='/about';">About</button>
             </div>
             <div class="nav-log">
+                <button class="<%=pageName == 'Signup' ? 'page-active' : ''%> nav-button" onclick="window.location='/signup';">Sign up</button>
                 <button class="<%=pageName == 'Login' ? 'page-active' : ''%> nav-button" onclick="window.location='/login';">Log in</button>
-                <button class="<%=pageName == 'addNews' ? 'page-active' : ''%> nav-button" onclick="window.location='/addNews';">Nouvelle annonce</button>
             </div>
         </nav>
         <div class="logBar">
@@ -21,7 +22,7 @@
         </div>
         <div class="center-gray-block w60 h60">
             <h1 class="login-title"><%=pageName%> page</h1>
-                <form action="/addNews/uploadNews" method="post" class="login-form" enctype="multipart/form-data">
+                <form action="/addnews/uploadnews" method="post" class="login-form" enctype="multipart/form-data">
                     <div class="form-button">
                         <input id="titre" class="form-input form-input-text" name="titre" type="text" autocomplete="titre" placeholder="Titre de l'annonce" required autofocus>
                         <label for="typeBien">Type de bien :</label>

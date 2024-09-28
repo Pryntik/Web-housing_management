@@ -1,11 +1,11 @@
-import passport from 'passport';
+import passport from 'passport'
 import session from 'express-session';
 import express from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
 import multer from 'multer';
-import { home, about, error, login, creaAnnonce } from './controlleur/controlleur';
-import { verifConnexion } from './controlleur/user_controlleur';
+import { home, error, addNews, about, login, signup } from './controlleur/controlleur';
+import { createUser, verifConnexion } from './controlleur/user_controlleur';
 import { ensureAuthenticated, verifRole } from './passport-config';
 import { uploadNews } from './controlleur/annonce_controlleur';
 
@@ -48,27 +48,15 @@ app.listen(port, () => {
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Page
 app.get('/', home);
+app.get('/error', error);
+app.get('/addnews', ensureAuthenticated, verifRole('agent'), addNews); 
 app.get('/about', about);
 app.get('/login', login);
-app.get('/error', error);
+app.get('/signup', signup);
+
+// Post
+app.post('/addnews/uploadnews', ensureAuthenticated , uploadNews); //checkRole, modifierAnnonce); // A FAIRE
 app.post('/login/check', verifConnexion);
-app.get('/addNews', ensureAuthenticated, verifRole('agent'), creaAnnonce); 
-app.post('/addNews/uploadNews', ensureAuthenticated , uploadNews); //checkRole, modifierAnnonce); // A FAIRE
-
-// Création des Utilisateurs (Utilisation de Postman pour crée les user directement sans utiliser de route crée)
-//app.post('/createUser', createUser);
-/*async function createUser() {
-  const newUser = new UserModel({
-      login: 'user2',
-      password: 'password2',
-      role: 'admin' // ou 'agent', 'admin'
-  });
-
-  try {
-      const savedUser = await newUser.save();
-      console.log('Utilisateur créé avec succès :', savedUser);
-  } catch (error) {
-      console.error('Erreur lors de la création de l\'utilisateur :', error);
-  }
-}*/
+app.post('/signup/createUser', createUser);

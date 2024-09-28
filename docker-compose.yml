@@ -2,7 +2,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: docker/app/dockerfile
+      dockerfile: docker/app.Dockerfile
     ports:
       - "3000:3000"
     environment:
@@ -18,7 +18,7 @@ services:
     image: mongo
     build:
       context: .
-      dockerfile: docker/mongo/dockerfile
+      dockerfile: docker/mongo.Dockerfile
     ports:
       - "27017:27017"
     volumes:

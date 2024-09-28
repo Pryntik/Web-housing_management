@@ -34,7 +34,7 @@ passport.serializeUser((user: any, done) => {
 });
 
 // Désérialiser l'utilisateur de la session
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (id: string, done) => {
   try {
     const utilisateur = await UserModel.findById(id);
     done(null, utilisateur);

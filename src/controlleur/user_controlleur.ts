@@ -6,7 +6,7 @@ import { UserModel } from "../mongoose_user";
 export const verifConnexion = async(req: Request, res: Response, next: NextFunction) => {
     try {
         // Récupération des informations du User
-        var {login, password, role} = req.body;
+        var {login, password} = req.body;
         if(!login || !password) {
             return res.status(400).json({message: "Les informations ne sont pas bonnes"});
         }
@@ -35,10 +35,31 @@ export const verifConnexion = async(req: Request, res: Response, next: NextFunct
                 if(err) {
                     return next(err)
                 }
+                app.locals.logStatus = true;
                 return res.redirect('/');
             });
         })(req, res, next);
     } catch(err) {
         res.status(400).json({error: err});
     };
+}
+
+// Création des Utilisateurs (Utilisation de Postman pour crée les user directement sans utiliser de route crée)
+export const createUser = async(req: Request, res: Response, next: NextFunction) => {
+    var {login, password, role} = req.body;
+
+    const newUser = new UserModel({
+        login: login,
+        password: password,
+        role: role,
+    });
+
+    try {
+        const savedUser = await newUser.save();
+        console.log('Utilisateur créé avec succès :', savedUser);
+        return res.redirect('/');
+    } catch (error) {
+        console.error('Erreur lors de la création de l\'utilisateur :', error);
+        return res.redirect('/error');
+    }
 }

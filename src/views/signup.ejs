@@ -21,29 +21,20 @@
                     <img class="log-icon" src="<%=logStatus == true ? '/images/logo-connected.png' : '/images/logo-disconnected.png'%>" alt="log-icon">
                 </div>
             </div>
-            <div class="center-gray-block w60 h60">
-                <h1 class="app-title"><%=pageName%> page</h1>
-                <div class="news-list">
-                    <% if (news && news.length > 0) { %>
-                        <h2>Mes Annonces :</h2>
-                        <ul>
-                            <% news.forEach(function(annonce) { %>
-                                <li>
-                                    <h3><%= annonce.titre %></h3>
-                                    <p>Type: <%= annonce.typeBien %></p>
-                                    <p>Description: <%= annonce.description %></p>
-                                    <p>Prix: <%= annonce.prix %> €</p>
-                                    <p>Statut: <%= annonce.statutPublication %></p>
-                                    <% if (annonce.photos.length > 0) { %>
-                                        <img src="data:<%= annonce.photos[0].contentType %>;base64,<%= annonce.photos[0].data.toString('base64') %>" alt="<%= annonce.titre %>" />
-                                    <% } %>
-                                </li>
-                            <% }); %>
-                        </ul>
-                    <% } else { %>
-                        <p>Aucune annonce publiée.</p>
-                    <% } %>
-                </div>
+            <div class="center-gray-block w40 h40">
+                <h1 class="login-title"><%=pageName%> page</h1>
+                    <form action="/signup/createUser" method="post" class="login-form">
+                        <div class="form-button">
+                            <input id="login" class="form-input form-input-text w50" name="login" type="text" autocomplete="login" placeholder="Username" required autofocus>
+                            <input id="password" class="form-input form-input-text w50" name="password" type="password" autocomplete="password" placeholder="Password" required>
+                            <select id="role" class="form-input form-input-select" name="role" required>
+                                <option value="utilisateur" selected>Utilisateur</option>
+                                <option value="agent">Agent</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="form-input form-input-submit">Sign up</button>
+                    </form>
             </div>
         </div>
     </body>
