@@ -1,6 +1,6 @@
 import { Response, Request, NextFunction } from "express";
 import { AnnonceModel, IAnnonceImmobiliere } from '../mongoose_annonce';
-import { IUser } from "../mongoose_user";
+import { IUser, UserModel } from "../mongoose_user";
 import multer from 'multer';
 
 // Création du multer pour gérer les fichiers (images)
@@ -56,3 +56,35 @@ export const uploadNews = [
         }
     }
 ];
+
+export const askQuestion = async (req: Request, res: Response) => {
+    const { annonceId } = req.params; 
+    const { contenu } = req.body;
+
+    const user = req.user as IUser;
+
+    try {
+        // Find the announcement by ID and update it
+        const annonce = await AnnonceModel.findById(annonceId);
+        const reponses: { user: IUser; contenu: string; date: Date  }[] = [];
+        if (!annonce) {
+            return res.status(404).send('Annonce not found');
+        }
+
+        // Add the new question
+        annonce.questions.push({
+            user,
+            contenu,
+            reponses,
+            date: new Date()
+        });
+
+        // Save the updated announcement
+        await annonce.save();
+
+        res.status(200).json(annonce);
+    } catch (error) {
+        console.error('Error while asking question:', error);
+        res.status(500).send('Internal Server Error');
+    }
+};

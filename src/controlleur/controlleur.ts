@@ -38,3 +38,14 @@ export const login = async( req: Request, res: Response) => {
 export const signup = async( req: Request, res: Response) => {
     res.render('signup', {pageName: 'Signup', logStatus: logStatus,});
 }
+
+export const formQuestion = async (req: Request, res: Response) => {
+    const { annonceId } = req.params;
+    const annonce = await AnnonceModel.findById(annonceId);
+
+    if (!annonce) {
+        return res.status(404).send('Annonce not found');
+    }
+
+    res.render('question', { annonce });
+};
