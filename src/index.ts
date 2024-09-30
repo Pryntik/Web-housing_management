@@ -4,10 +4,10 @@ import express from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
 import multer from 'multer';
-import { home, error, addNews, about, login, signup, formQuestion } from './controlleur/controlleur';
+import { home, error, addNews, about, login, signup, formQuestion, formReponse } from './controlleur/controlleur';
 import { createUser, verifConnexion } from './controlleur/user_controlleur';
 import { ensureAuthenticated, verifRole } from './passport-config';
-import { askQuestion, uploadNews } from './controlleur/annonce_controlleur';
+import { addResponse, askQuestion, uploadNews } from './controlleur/annonce_controlleur';
 
 /* Initialisation du serveur */
 export const app = express();
@@ -56,8 +56,12 @@ app.get('/about', about);
 app.get('/login', login);
 app.get('/signup', signup);
 app.get('/annonces/:annonceId', ensureAuthenticated, verifRole('utilisateur'), formQuestion);
+app.get('/annonces/:annonceId/questions/:questionId', ensureAuthenticated, verifRole('agent'), formReponse);
+
 // Post
 app.post('/addnews/uploadnews', ensureAuthenticated , uploadNews); //checkRole, modifierAnnonce); // A FAIRE
 app.post('/login/check', verifConnexion);
 app.post('/signup/createUser', createUser);
 app.post('/annonces/:annonceId/ask-question', askQuestion);
+app.post('/annonces/:annonceId/questions/:questionId/repondre', addResponse);
+

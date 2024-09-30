@@ -1,4 +1,4 @@
-import mongoose, { Document, Model } from 'mongoose';
+import mongoose, { Document, Model, Types } from 'mongoose';
 import { IUser } from './mongoose_user';
 
 // Types pour le statut de publication et le statut du bien
@@ -19,6 +19,26 @@ export interface IQuestion {
     date: Date;
 }
 
+const QuestionSchema = new mongoose.Schema<IQuestion>({
+    user: {
+        login: { type: String, required: true },
+        roles: { type: [String] }
+    },
+    contenu: { type: String, required: true },
+    reponses: [
+        {
+            user: {
+                login: { type: String, required: true },
+                roles: { type: [String], required: true }
+            },
+            contenu: { type: String, required: true },
+            date: { type: Date, default: Date.now }
+        }
+    ],
+    date: { type: Date, default: Date.now }
+});
+
+export const QuestionModel = mongoose.model<IQuestion>('Question', QuestionSchema)
 // Interface pour une réponse fournie par un agent immobilier
 export interface IReponse {
     user: IUser;
@@ -36,7 +56,7 @@ export interface IAnnonceImmobiliere extends Document {
     prix: number; // Peut être le prix de vente ou le loyer
     dateDisponibilite: Date;
     photos?: IImage[]; // Tableau d'URLs des photos, optionnel
-    questions: IQuestion[]; // Liste des questions posées par les utilisateurs
+    questions: Types.DocumentArray<IQuestion & Document>; // Liste des questions posées par les utilisateurs
     reponses: IReponse[]; // Liste des réponses fournies par les agents
 }
 
@@ -53,26 +73,7 @@ export const AnnonceSchema = new mongoose.Schema({
         data: { type: Buffer, required: true },
         contentType: { type: String, required: true }
     }],
-    questions: [
-        {
-            user: {
-                login: { type: String, required: true },
-                roles: { type: [String] }
-            },
-            contenu: { type: String, required: true },
-            reponses: [
-                {
-                    user: {
-                        login: { type: String, required: true },
-                        roles: { type: [String], required: true }
-                    },
-                    contenu: { type: String, required: true },
-                    date: { type: Date, default: Date.now }
-                }
-            ],
-            date: { type: Date, default: Date.now }
-        }
-    ]
+    questions: [ QuestionSchema ]
 });
 
 export const AnnonceModel = mongoose.model<IAnnonceImmobiliere>('Annonce', AnnonceSchema);

@@ -64,14 +64,18 @@ export const askQuestion = async (req: Request, res: Response) => {
     const user = req.user as IUser;
 
     try {
-        // Find the announcement by ID and update it
+
+        if (!contenu) {
+            return res.status(400).json({ message: 'Question non valide.' });
+        }
+
+        // Cherche l'annonce dans la base de données pour l'update
         const annonce = await AnnonceModel.findById(annonceId);
         const reponses: { user: IUser; contenu: string; date: Date  }[] = [];
         if (!annonce) {
-            return res.status(404).send('Annonce not found');
+            return res.status(404).send('Annonce non trouvée');
         }
 
-        // Add the new question
         annonce.questions.push({
             user,
             contenu,
@@ -79,12 +83,47 @@ export const askQuestion = async (req: Request, res: Response) => {
             date: new Date()
         });
 
-        // Save the updated announcement
         await annonce.save();
 
         res.status(200).json(annonce);
     } catch (error) {
-        console.error('Error while asking question:', error);
+        console.error('Erreur lors de la création de la question:', error);
         res.status(500).send('Internal Server Error');
+    }
+};
+
+export const addResponse = async (req: Request, res: Response, next: NextFunction) => {
+    const { annonceId, questionId } = req.params;
+    const { reponse } = req.body;
+
+    const userId = req.user as IUser;
+
+    try {
+
+        if (!reponse) {
+            return res.status(400).json({ message: 'Reponse non valide.' });
+        }
+
+        // Chercher l'annonce correspondante
+        const annonce = await AnnonceModel.findById(annonceId);
+        if (!annonce) {
+            return res.status(404).json({ message: 'Annonce non trouvée.' });
+        }
+
+        // Chercher la question à laquelle on veut répondre
+        const question = annonce.questions.id(questionId);
+        if (!question) {
+            return res.status(404).json({ message: 'Question non trouvée.' });
+        }
+
+        // Ajouter la réponse à la question
+        question.reponses.push({ user: userId, contenu: reponse, date: new Date() });
+
+        // Sauvegarder l'annonce avec la nouvelle réponse
+        await annonce.save();
+
+        res.status(200).json({ message: 'Réponse ajoutée avec succès.' });
+    } catch (error) {
+        next(error);
     }
 };

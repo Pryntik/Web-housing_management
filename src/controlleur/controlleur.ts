@@ -49,3 +49,18 @@ export const formQuestion = async (req: Request, res: Response) => {
 
     res.render('question', { annonce });
 };
+
+export const formReponse = async (req: Request, res: Response) => {
+    const { annonceId, questionId } = req.params;
+    const annonce = await AnnonceModel.findById(annonceId);
+    if (!annonce) {
+        return res.status(404).json({ message: 'Annonce non trouvée.' });
+    }
+
+    const question = annonce.questions.id(questionId);
+    if (!question) {
+        return res.status(404).json({ message: 'Question non trouvée.' });
+    }
+
+    res.render('reponse', { annonce, question });
+};

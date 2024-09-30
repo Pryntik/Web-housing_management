@@ -1,0 +1,13 @@
+<html>
+<body>
+    <h1>Répondre à la question</h1>
+    <h2>Annonce : <%= annonce.titre %></h2>
+    <p>Question : <%= question.contenu %></p>
+
+    <form action="/annonces/<%= annonce._id %>/questions/<%= question._id %>/repondre" method="POST">
+        <label for="reponse">Votre réponse :</label>
+        <textarea name="reponse" id="reponse" rows="4" cols="50"></textarea>
+        <button type="submit">Envoyer la réponse</button>
+    </form>
+</body>
+</html>
