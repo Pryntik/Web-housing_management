@@ -37,6 +37,7 @@
                                     <% if (annonce.photos.length > 0) { %>
                                         <img src="data:<%= annonce.photos[0].contentType %>;base64,<%= annonce.photos[0].data.toString('base64') %>" alt="<%= annonce.titre %>" />
                                     <% } %>
+                                    <button onclick="window.location.href='/annonces/<%= annonce._id %>/modifierAnnonce'">Modifiez cette annonce</button>
                                     <button onclick="window.location.href='/annonces/<%= annonce._id %>'">Posez une question</button>
                                     <% if (annonce.questions.length > 0) { %>
                                         <h2>Questions posées :</h2>

@@ -64,3 +64,14 @@ export const formReponse = async (req: Request, res: Response) => {
 
     res.render('reponse', { annonce, question });
 };
+
+export const formModif = async (req: Request, res: Response) => {
+    const { annonceId } = req.params;
+    const annonce = await AnnonceModel.findById(annonceId);
+
+    if (!annonce) {
+        return res.status(404).send('Annonce not found');
+    }
+
+    res.render('modif', { annonce });
+};

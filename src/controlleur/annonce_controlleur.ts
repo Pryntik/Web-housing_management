@@ -127,3 +127,55 @@ export const addResponse = async (req: Request, res: Response, next: NextFunctio
         next(error);
     }
 };
+
+export const modifAnnonce = [
+    upload.array('photos'), // Middleware pour gérer les images
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { annonceId } = req.params;
+            const {
+                titre,
+                typeBien,
+                statutPublication,
+                statutBien,
+                description,
+                prix,
+                dateDisponibilite,
+            } = req.body;
+
+            // Initialisation des images en vides
+            let images: { data: Buffer; contentType: string }[] = [];
+
+            // Si des images sont fournis, les transformer en tableau d'images
+            if (req.files && Array.isArray(req.files)) {
+                images = req.files.map((file: Express.Multer.File) => ({
+                    data: file.buffer,
+                    contentType: file.mimetype
+                }));
+            }
+
+            const updatedAnnonce = await AnnonceModel.findByIdAndUpdate(
+                annonceId,
+                { 
+                    titre,
+                    typeBien,
+                    statutPublication,
+                    statutBien,
+                    description,
+                    prix,
+                    dateDisponibilite,
+                    photos: images.length > 0 ? images : undefined // Ternaire qui stocke les images que si elles existent
+                },
+            );
+
+            if (!updatedAnnonce) {
+                return res.status(404).send('Annonce non trouvée');
+            }
+
+            // Redirection à l'accueil si la modification s'est effectuée
+            res.redirect("/");
+        } catch (error) {
+            res.status(500).send('Erreur interne du serveur.');
+        }
+    }
+];
