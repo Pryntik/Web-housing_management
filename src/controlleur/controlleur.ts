@@ -47,7 +47,7 @@ export const formQuestion = async (req: Request, res: Response) => {
         return res.status(404).send('Annonce not found');
     }
 
-    res.render('question', { annonce });
+    res.render('question', { annonce, pageName: "Question Annonce" });
 };
 
 export const formReponse = async (req: Request, res: Response) => {
@@ -62,7 +62,7 @@ export const formReponse = async (req: Request, res: Response) => {
         return res.status(404).json({ message: 'Question non trouvée.' });
     }
 
-    res.render('reponse', { annonce, question });
+    res.render('reponse', { annonce, question, pageName: 'Réponse Annonce' });
 };
 
 export const formModif = async (req: Request, res: Response) => {
@@ -73,5 +73,5 @@ export const formModif = async (req: Request, res: Response) => {
         return res.status(404).send('Annonce not found');
     }
 
-    res.render('modif', { annonce });
+    res.render('modif', { annonce, pageName: 'Modification Annonce'});
 };

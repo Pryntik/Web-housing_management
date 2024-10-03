@@ -3,47 +3,41 @@
         <link href="../styles/master.scss" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <div class="app">
-            <nav class="navBar">
-                <div class="nav-page">
-                    <button class="<%=pageName == 'Home' ? 'page-active' : ''%> nav-button" onclick="window.location='/';">Home</button>
-                    <button class="<%=pageName == 'Addnews' ? 'page-active' : ''%> nav-button" onclick="window.location='/addnews';">Nouvelle annonce</button>
-                    <button class="<%=pageName == 'About' ? 'page-active' : ''%> nav-button" onclick="window.location='/about';">About</button>
-                </div>
-                <div class="nav-log">
-                    <button class="<%=pageName == 'Signup' ? 'page-active' : ''%> nav-button" onclick="window.location='/signup';">Sign up</button>
-                    <button class="<%=pageName == 'Login' ? 'page-active' : ''%> nav-button" onclick="window.location='/login';">Log in</button>
-                </div>
-            </nav>
-            <div class="logBar">
-                <div class="logStatus">
-                    <span class="log-text"><%=logStatus == true ? 'Connected' : 'Disconnected'%></span>
-                    <img class="log-icon" src="<%=logStatus == true ? '/images/logo-connected.png' : '/images/logo-disconnected.png'%>" alt="log-icon">
-                </div>
+        <nav class="navBar">
+            <div class="nav-page">
+                <button class="<%=pageName == 'Home' ? 'page-active' : ''%> nav-button" onclick="window.location='/';">Home</button>
+                <button class="<%=pageName == 'Addnews' ? 'page-active' : ''%> nav-button" onclick="window.location='/addnews';">Nouvelle annonce</button>
+                <button class="<%=pageName == 'About' ? 'page-active' : ''%> nav-button" onclick="window.location='/about';">About</button>
             </div>
-            <div class="center-gray-block w40 h40">
-                <h1 class="login-title"><%=pageName%> page</h1>
+            <div class="nav-log">
+                <button class="<%=pageName == 'Signup' ? 'page-active' : ''%> nav-button" onclick="window.location='/signup';">Sign up</button>
+                <button class="<%=pageName == 'Login' ? 'page-active' : ''%> nav-button" onclick="window.location='/login';">Log in</button>
+            </div>
+        </nav>
+        <div class="logBar">
+            <div class="logStatus">
+                <span class="log-text"><%=logStatus == true ? 'Connected' : 'Disconnected'%></span>
+                <img class="log-icon" src="<%=logStatus == true ? '/images/logo-connected.png' : '/images/logo-disconnected.png'%>" alt="log-icon">
+            </div>
+        </div>
+        <div class="center-gray-block w60 h60">
+            <h1 class="login-title"><%=pageName%> page</h1>
                 <form action="/annonces/<%= annonce._id %>/modifierAnnonce/validerModif" method="POST" enctype="multipart/form-data">
                     <div class="form-button">
-                        <!-- Titre de l'annonce -->
-                        <label for="titre">Titre de l'annonce :</label>
                         <input id="titre" class="form-input form-input-text" name="titre" type="text" autocomplete="titre" placeholder="Titre de l'annonce" value="<%= typeof annonce !== 'undefined' ? annonce.titre : '' %>" required autofocus>
                 
-                        <!-- Type de bien -->
                         <label for="typeBien">Type de bien :</label>
                         <select id="typeBien" name="typeBien" required>
                             <option value="vente" <%= typeof annonce !== 'undefined' && annonce.typeBien === 'vente' ? 'selected' : '' %>>Vente</option>
                             <option value="location" <%= typeof annonce !== 'undefined' && annonce.typeBien === 'location' ? 'selected' : '' %>>Location</option>
                         </select>
                 
-                        <!-- Statut de publication -->
                         <label for="statutPublication">Statut de publication :</label>
                         <select id="statutPublication" name="statutPublication" required>
                             <option value="publiee" <%= typeof annonce !== 'undefined' && annonce.statutPublication === 'publiee' ? 'selected' : '' %>>Publiée</option>
                             <option value="non publiee" <%= typeof annonce !== 'undefined' && annonce.statutPublication === 'non publiee' ? 'selected' : '' %>>Non Publiée</option>
                         </select>
                 
-                        <!-- Statut du bien -->
                         <label for="statutBien">Statut du bien :</label>
                         <select id="statutBien" name="statutBien" required>
                             <option value="disponible" <%= typeof annonce !== 'undefined' && annonce.statutBien === 'disponible' ? 'selected' : '' %>>Disponible</option>
@@ -51,27 +45,85 @@
                             <option value="vendu" <%= typeof annonce !== 'undefined' && annonce.statutBien === 'vendu' ? 'selected' : '' %>>Vendu</option>
                         </select>
                 
-                        <!-- Description -->
                         <label for="description">Description :</label>
                         <textarea id="description" name="description" rows="5" cols="30" required><%= typeof annonce !== 'undefined' ? annonce.description : '' %></textarea>
                 
-                        <!-- Prix -->
                         <label for="prix">Prix :</label>
                         <input type="number" id="prix" name="prix" value="<%= typeof annonce !== 'undefined' ? annonce.prix : '' %>" required>
                 
-                        <!-- Date de disponibilité -->
                         <label for="dateDisponibilite">Date de disponibilité :</label>
                         <input type="date" id="dateDisponibilite" name="dateDisponibilite" value="<%= typeof annonce !== 'undefined' ? annonce.dateDisponibilite.toISOString().substring(0, 10) : '' %>" required>
                 
-                        <!-- Photos (facultatif) -->
+                        <!-- Drag & Drop zone pour les photos -->
                         <label for="photos">Photos (facultatif) :</label>
-                        <input type="file" name="photos" multiple />
+                        <div id="drop-zone" class="drop-zone" style="border: 2px dashed #ccc; padding: 20px; text-align: center;">
+                            Glisser-déposer les fichiers ici ou cliquer pour sélectionner
+                            <input type="file" id="fileInput" name="photos" multiple hidden />
+                        </div>
+                        <div id="file-preview"></div>
                     </div>
                 
-                    <!-- Bouton de validation -->
                     <button type="submit" class="form-input form-input-submit">Modifier l'annonce</button>
                 </form>                
-            </div>
+
         </div>
+        <!-- Script de gestion du Drag & Drop -->
+        <script>
+            const dropZone = document.getElementById('drop-zone');
+            const fileInput = document.getElementById('fileInput');
+            const filePreview = document.getElementById('file-preview');
+
+            // Stocker les fichiers sélectionnés
+            let selectedFiles = [];
+
+            // Gérer le clic pour ouvrir l'explorateur de fichiers
+            dropZone.addEventListener('click', () => fileInput.click());
+
+            // Gérer les fichiers sélectionnés via l'explorateur
+            fileInput.addEventListener('change', (event) => {
+                addFiles(event.target.files);
+            });
+
+            // Empêcher le comportement par défaut lors du glisser-déposer
+            dropZone.addEventListener('dragover', (event) => {
+                event.preventDefault();
+                dropZone.style.backgroundColor = '#f0f0f0'; // Changer la couleur pour indiquer un survol
+            });
+
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.style.backgroundColor = '#fff'; // Remettre la couleur de fond d'origine
+            });
+
+            // Gérer le dépôt des fichiers
+            dropZone.addEventListener('drop', (event) => {
+                event.preventDefault();
+                dropZone.style.backgroundColor = '#fff'; // Remettre la couleur de fond d'origine
+                const files = event.dataTransfer.files;
+                addFiles(files);
+            });
+
+            // Fonction pour gérer et afficher les fichiers
+            function addFiles(files) {
+                // Ajouter les fichiers sélectionnés aux fichiers existants
+                selectedFiles = [...selectedFiles, ...Array.from(files)];
+                
+                // Réinitialiser l'aperçu des fichiers
+                filePreview.innerHTML = '';
+
+                // Afficher tous les fichiers sélectionnés
+                selectedFiles.forEach((file, index) => {
+                    const fileElement = document.createElement('div');
+                    fileElement.textContent = `${index + 1}: ${file.name}`;
+                    filePreview.appendChild(fileElement);
+                });
+
+                // Créer un nouvel objet `DataTransfer` pour assigner tous les fichiers à l'input
+                const dataTransfer = new DataTransfer();
+                selectedFiles.forEach(file => dataTransfer.items.add(file));
+
+                // Assigner les fichiers au champ input pour qu'ils soient envoyés avec le formulaire
+                fileInput.files = dataTransfer.files;
+            }
+        </script>
     </body>
 </html>
