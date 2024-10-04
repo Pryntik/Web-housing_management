@@ -6,7 +6,7 @@
         <nav class="navBar">
             <div class="nav-page">
                 <button class="<%=pageName == 'Home' ? 'page-active' : ''%> nav-button" onclick="window.location='/';">Home</button>
-                <button class="<%=pageName == 'Addnews' ? 'page-active' : ''%> nav-button" onclick="window.location='/addnews';">Nouvelle annonce</button>
+                <button class="<%=pageName == 'News' ? 'page-active' : ''%> nav-button" onclick="window.location='/addnews';">Nouvelle annonce</button>
                 <button class="<%=pageName == 'About' ? 'page-active' : ''%> nav-button" onclick="window.location='/about';">About</button>
             </div>
             <div class="nav-log">
@@ -23,7 +23,7 @@
         <div class="center-gray-block w60 h60">
             <h1 class="login-title"><%=pageName%> page</h1>
                 <form action="/annonces/<%= annonce._id %>/modifierAnnonce/validerModif" method="POST" enctype="multipart/form-data">
-                    <div class="form-button">
+                    <div class="form-button-edit">
                         <input id="titre" class="form-input form-input-text" name="titre" type="text" autocomplete="titre" placeholder="Titre de l'annonce" value="<%= typeof annonce !== 'undefined' ? annonce.titre : '' %>" required autofocus>
                 
                         <label for="typeBien">Type de bien :</label>

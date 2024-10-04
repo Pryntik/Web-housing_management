@@ -7,7 +7,7 @@
             <nav class="navBar">
                 <div class="nav-page">
                     <button class="<%=pageName == 'Home' ? 'page-active' : ''%> nav-button" onclick="window.location='/';">Home</button>
-                    <button class="<%=pageName == 'Addnews' ? 'page-active' : ''%> nav-button" onclick="window.location='/addnews';">Nouvelle annonce</button>
+                    <button class="<%=pageName == 'News' ? 'page-active' : ''%> nav-button" onclick="window.location='/addnews';">Nouvelle annonce</button>
                     <button class="<%=pageName == 'About' ? 'page-active' : ''%> nav-button" onclick="window.location='/about';">About</button>
                 </div>
                 <div class="nav-log">
@@ -24,7 +24,7 @@
             <div class="center-gray-block w40 h40">
                 <h1 class="login-title"><%=pageName%> page</h1>
                     <form action="/signup/createUser" method="post" class="login-form">
-                        <div class="form-button">
+                        <div class="form-button-signup">
                             <input id="login" class="form-input form-input-text w50" name="login" type="text" autocomplete="login" placeholder="Username" required autofocus>
                             <input id="password" class="form-input form-input-text w50" name="password" type="password" autocomplete="password" placeholder="Password" required>
                             <select id="role" class="form-input form-input-select" name="role" required>

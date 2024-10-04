@@ -1,0 +1,69 @@
+.form-button-news select {
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 5px;
+    font-size: 16px;
+    background-color: var(--ligth-green);
+    color: var(--dark-space);
+    margin-bottom: 20px;
+}
+
+.form-button-news input[type="date"] {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 5px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.news-form {
+    text-align: center;
+}
+
+.form-head-news {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.news-title {
+    height: 40px;
+    border-radius: 10px;
+}
+.form-news-submit {
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: var(--sky-blue);
+    cursor: pointer;
+    margin-top: 20px;
+    align-self: flex-end;
+}
+
+.form-button-news {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 90%;
+}
+
+.news-col1 {
+    display: flex;
+    flex-direction: column;
+}
+
+.news-col2 {
+    display: flex;
+    flex-direction: column;
+}
+
+.news-col1 > * {
+    margin-bottom: 10px;
+}
+
+.news-col2 > * {
+    margin-bottom: 10px;
+}

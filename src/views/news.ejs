@@ -6,7 +6,7 @@
     <nav class="navBar">
         <div class="nav-page">
             <button class="<%=pageName == 'Home' ? 'page-active' : ''%> nav-button" onclick="window.location='/';">Home</button>
-            <button class="<%=pageName == 'Addnews' ? 'page-active' : ''%> nav-button" onclick="window.location='/addnews';">Nouvelle annonce</button>
+            <button class="<%=pageName == 'News' ? 'page-active' : ''%> nav-button" onclick="window.location='/addnews';">Nouvelle annonce</button>
             <button class="<%=pageName == 'About' ? 'page-active' : ''%> nav-button" onclick="window.location='/about';">About</button>
         </div>
         <div class="nav-log">
@@ -22,40 +22,44 @@
     </div>
     <div class="center-gray-block w60 h60">
         <h1 class="login-title"><%=pageName%> page</h1>
-        <form action="/addnews/uploadnews" method="post" class="login-form" enctype="multipart/form-data">
-            <div class="form-button">
-                <input id="titre" class="form-input form-input-text" name="titre" type="text" autocomplete="titre" placeholder="Titre de l'annonce" required autofocus>
-                <label for="typeBien">Type de bien :</label>
-                <select id="typeBien" name="typeBien" required>
-                    <option value="vente" <%= typeof annonce !== 'undefined' && annonce.typeBien === 'vente' ? 'selected' : '' %>>Vente</option>
-                    <option value="location" <%= typeof annonce !== 'undefined' && annonce.typeBien === 'location' ? 'selected' : '' %>>Location</option>
-                </select>
-                <label for="statutPublication">Statut de publication :</label>
-                <select id="statutPublication" name="statutPublication" required>
-                    <option value="publiee" <%= typeof annonce !== 'undefined' && annonce.statutPublication === 'publiee' ? 'selected' : '' %>>Publiée</option>
-                    <option value="non publiee" <%= typeof annonce !== 'undefined' && annonce.statutPublication === 'non publiee' ? 'selected' : '' %>>Non Publiée</option>
-                </select>
-                <label for="statutBien">Statut du bien :</label>
-                <select id="statutBien" name="statutBien" required>
-                    <option value="disponible" <%= typeof annonce !== 'undefined' && annonce.statutBien === 'disponible' ? 'selected' : '' %>>Disponible</option>
-                    <option value="loue" <%= typeof annonce !== 'undefined' && annonce.statutBien === 'loue' ? 'selected' : '' %>>Loué</option>
-                    <option value="vendu" <%= typeof annonce !== 'undefined' && annonce.statutBien === 'vendu' ? 'selected' : '' %>>Vendu</option>
-                </select>
-                <label for="description">Description :</label>
-                <textarea id="description" name="description" rows="5" cols="30" required><%= typeof annonce !== 'undefined' ? annonce.description : '' %></textarea>
-                <label for="prix">Prix :</label>
-                <input type="number" id="prix" name="prix" value="<%= typeof annonce !== 'undefined' ? annonce.prix : '' %>" required>
-                <label for="dateDisponibilite">Date de disponibilité :</label>
-                <input type="date" id="dateDisponibilite" name="dateDisponibilite" value="<%= typeof annonce !== 'undefined' ? annonce.dateDisponibilite.toISOString().substring(0, 10) : '' %>" required>
-                <!-- Drag & Drop zone pour les photos -->
-                <label for="photos">Photos (facultatif) :</label>
-                <div id="drop-zone" class="drop-zone" style="border: 2px dashed #ccc; padding: 20px; text-align: center;">
-                    Glisser-déposer les fichiers ici ou cliquer pour sélectionner
-                    <input type="file" id="fileInput" name="photos" multiple hidden />
+        <form action="/addnews/uploadnews" method="post" class="news-form" enctype="multipart/form-data">                
+            <div class="form-button-news">
+                <div class="news-col1">
+                    <input id="titre" class="news-title" name="titre" type="text" autocomplete="titre" placeholder="Titre de l'annonce" required autofocus>
+                    <label for="prix">Prix :</label>
+                    <input type="number" id="prix" name="prix" value="<%= typeof annonce !== 'undefined' ? annonce.prix : '' %>" required>
+                    <label for="typeBien">Type de bien :</label>
+                    <select id="typeBien" name="typeBien" required>
+                        <option value="vente" <%= typeof annonce !== 'undefined' && annonce.typeBien === 'vente' ? 'selected' : '' %>>Vente</option>
+                        <option value="location" <%= typeof annonce !== 'undefined' && annonce.typeBien === 'location' ? 'selected' : '' %>>Location</option>
+                    </select>
+                    <label for="statutPublication">Statut de publication :</label>
+                    <select id="statutPublication" name="statutPublication" required>
+                        <option value="publiee" <%= typeof annonce !== 'undefined' && annonce.statutPublication === 'publiee' ? 'selected' : '' %>>Publiée</option>
+                        <option value="non publiee" <%= typeof annonce !== 'undefined' && annonce.statutPublication === 'non publiee' ? 'selected' : '' %>>Non Publiée</option>
+                    </select>
+                    <label for="statutBien">Statut du bien :</label>
+                    <select id="statutBien" name="statutBien" required>
+                        <option value="disponible" <%= typeof annonce !== 'undefined' && annonce.statutBien === 'disponible' ? 'selected' : '' %>>Disponible</option>
+                        <option value="loue" <%= typeof annonce !== 'undefined' && annonce.statutBien === 'loue' ? 'selected' : '' %>>Loué</option>
+                        <option value="vendu" <%= typeof annonce !== 'undefined' && annonce.statutBien === 'vendu' ? 'selected' : '' %>>Vendu</option>
+                    </select>
+                    <label for="dateDisponibilite">Date de disponibilité :</label>
+                    <input type="date" id="dateDisponibilite" name="dateDisponibilite" value="<%= typeof annonce !== 'undefined' ? annonce.dateDisponibilite.toISOString().substring(0, 10) : '' %>" required>
                 </div>
-                <div id="file-preview"></div>
+                <div class="news-col2">
+                    <label for="description">Description :</label>
+                    <textarea id="description" name="description" rows="5" cols="30" required><%= typeof annonce !== 'undefined' ? annonce.description : '' %></textarea>
+                    <!-- Drag & Drop zone pour les photos -->
+                    <label for="photos">Photos (facultatif) :</label>
+                    <div id="drop-zone" class="drop-zone" style="border: 2px dashed #ccc; padding: 20px; text-align: center;">
+                        Glisser-déposer les fichiers ici ou cliquer pour sélectionner
+                        <input type="file" id="fileInput" name="photos" multiple hidden />
+                    </div>
+                    <button type="submit" class="form-news-submit">Valider l'annonce</button>
+                    <div id="file-preview"></div>
+                </div>
             </div>
-            <button type="submit" class="form-input form-input-submit">Valider l'annonce</button>
         </form>
     </div>
 
