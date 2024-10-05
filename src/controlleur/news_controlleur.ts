@@ -2,6 +2,7 @@ import { Response, Request, NextFunction } from "express";
 import { NewsModel, INewsImmobiliere } from '../mongoose_news';
 import { IUser, UserModel } from "../mongoose_user";
 import multer from 'multer';
+import { imageNewsDefault, ImageType } from "../types/TImage";
 
 // Création du multer pour gérer les fichiers (images)
 const storage = multer.memoryStorage();
@@ -22,7 +23,7 @@ export const uploadNews = [
             } = req.body;
 
             // Initialisation des images en vides
-            let images: { data: Buffer; contentType: string }[] = [];
+            let images: ImageType[] = [];
 
             // Si des images sont fournis, les transformer en tableau d'images
             if (req.files && Array.isArray(req.files)) {
@@ -32,8 +33,8 @@ export const uploadNews = [
                 }));
             }
 
-            // Créer une nouvelle instance d'news
-            const nouvelleNews: INewsImmobiliere = new NewsModel({
+            // Créer une nouvelle instance d'annonce
+            const newsObject: INewsImmobiliere = new NewsModel({
                 titre,
                 typeBien,
                 statutPublication,
@@ -41,14 +42,13 @@ export const uploadNews = [
                 description,
                 prix,
                 dateDisponibilite,
-                photos: images.length > 0 ? images : undefined // Ternaire qui stocke les images que si elles existent
+                photos: images.length > 0 ? images : imageNewsDefault // Ternaire qui stocke les images que si elles existent
             });
 
             // Sauvegarde l'annonce dans la base de données
-            const newsSauvegardee = await nouvelleNews.save();
+            await newsObject.save();
 
             // Redirection à l'accueil si la création s'est effectuée
-            //res.status(201).json(newsSauvegardee); Vérification que l'annonce soit bien crée.
             res.redirect("/");
         } catch (error) {
             console.error('Erreur lors de la création de l\'news :', error);

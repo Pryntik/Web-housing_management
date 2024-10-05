@@ -35,11 +35,9 @@
                                     <p>Prix: <%= news.prix %> €</p>
                                     <p>Statut: <%= news.statutPublication %></p>
                                     <p>
-                                        <% if (news.photos.length > 0) { %>
-                                            <% news.photos.forEach(function(photo) { %>
-                                                <img src="data:<%= photo.contentType %>;base64,<%= photo.data.toString('base64') %>" alt="<%= news.titre %>" style="max-width: 200px; margin: 10px;"/>
-                                            <% }) %>
-                                        <% } %>
+                                        <% news.photos.forEach(function(photo) { %>
+                                            <img src="data:<%= photo.contentType %>;base64,<%= photo.data.toString('base64') %>" alt="<%= news.titre %>" style="max-width: 200px; margin: 10px;"/>
+                                        <% }) %>
                                     </p>
                                     <button onclick="window.location.href='/news/<%= news._id %>/editNews'">Modifiez cette annonce</button>
                                     <button onclick="window.location.href='/news/<%= news._id %>'">Posez une question</button>
