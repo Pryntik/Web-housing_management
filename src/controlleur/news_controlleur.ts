@@ -73,7 +73,7 @@ export const askQuestion = async (req: Request, res: Response) => {
         const news = await NewsModel.findById(newsId);
         const reponses: { user: IUser; contenu: string; date: Date  }[] = [];
         if (!news) {
-            return res.status(404).send('News non trouvée');
+            return res.status(404).send('Annonce non trouvée');
         }
 
         news.questions.push({
@@ -107,7 +107,7 @@ export const addResponse = async (req: Request, res: Response, next: NextFunctio
         // Chercher l'annonce correspondante
         const news = await NewsModel.findById(newsId);
         if (!news) {
-            return res.status(404).json({ message: 'News non trouvée.' });
+            return res.status(404).json({ message: 'Annonce non trouvée.' });
         }
 
         // Chercher la question à laquelle on veut répondre

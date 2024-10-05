@@ -44,7 +44,7 @@ export const formQuestion = async (req: Request, res: Response) => {
     const news = await NewsModel.findById(newsId);
 
     if (!news) {
-        return res.status(404).send('News non trouvé');
+        return res.status(404).send('Annonce non trouvé');
     }
 
     res.render('question', { news, pageName: "Question Annonce" });
@@ -65,12 +65,12 @@ export const formReponse = async (req: Request, res: Response) => {
     res.render('reponse', { news, question, pageName: 'Réponse Annonce' });
 };
 
-export const formModif = async (req: Request, res: Response) => {
+export const formEdit = async (req: Request, res: Response) => {
     const { newsId } = req.params;
     const news = await NewsModel.findById(newsId);
 
     if (!news) {
-        return res.status(404).send('News non trouvé');
+        return res.status(404).send('Annonce non trouvé');
     }
 
     res.render('edit', { news, pageName: 'Modification Annonce'});

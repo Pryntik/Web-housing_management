@@ -1,6 +1,6 @@
 import mongoose, { Document, Model } from 'mongoose';
+import { RoleType } from './types/TUser';
 
-export type RoleType = 'utilisateur' | 'agent' | 'admin';
 // Interface définissant le schéma User
 export interface IUser extends Document {
   login: string;

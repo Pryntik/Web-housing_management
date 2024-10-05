@@ -43,6 +43,15 @@
     align-self: flex-end;
 }
 
+.asterisk {
+    display: contents;
+    color: red;
+}
+
+.news-legend {
+    align-self: flex-end;
+}
+
 .form-button-news {
     display: flex;
     flex-direction: row;

@@ -1,7 +1,9 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import { IUser, RoleType, UserModel} from './mongoose_user';
+import { IUser, UserModel} from './mongoose_user';
 import { Response, Request, NextFunction } from 'express';
+import { RoleType } from './types/TUser';
+import { app } from '.';
 
 // Configurer la stratégie locale
 passport.use(new LocalStrategy(
@@ -21,6 +23,7 @@ passport.use(new LocalStrategy(
       }
 
       // Authentification réussie
+      app.locals.logStatus = true;
       return done(null, utilisateur);
     } catch (error) {
       return done(error);
@@ -53,7 +56,7 @@ export const ensureAuthenticated = (req: Request, res: Response, next: NextFunct
 }
 
 // Vérification que l'utilisateur est connecté et qu'il possède le bon rôle (Utiliser comme Middleware pour être sûr que l'utilisateur peut accéder à certaines fonctionnalitées)
-export const verifRole = (role: string) => {
+export const verifRole = (role: RoleType) => {
   return (req: Request, res: Response, next: NextFunction) => {
       const user = req.user as IUser;
       if (req.isAuthenticated() && (user.role.includes(role) || user.role.includes('admin'))) {

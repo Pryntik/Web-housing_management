@@ -1,10 +1,6 @@
 import mongoose, { Document, Model, Types } from 'mongoose';
 import { IUser } from './mongoose_user';
-
-// Types pour le statut de publication et le statut du bien
-type StatutPublication = 'publiee' | 'non publiee';
-type StatutBien = 'disponible' | 'loue' | 'vendu';
-type TypeBien = 'vente' | 'location';
+import { TypeBien, StatutPublication, StatutBien } from './types/TNews';
 
 export interface IImage {
     data: Buffer;
