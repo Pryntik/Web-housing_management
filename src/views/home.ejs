@@ -26,40 +26,23 @@
                 <div class="news-list">
                     <% if (news && news.length > 0) { %>
                         <h2>Mes Annonces :</h2>
-                        <ul>
                             <% news.forEach(function(news) { %>
-                                <li>
-                                    <h3><%= news.titre %></h3>
-                                    <p>Type: <%= news.typeBien %></p>
-                                    <p>Description: <%= news.description %></p>
-                                    <p>Prix: <%= news.prix %> €</p>
-                                    <p>Statut: <%= news.statutPublication %></p>
-                                    <p>
-                                        <% news.photos.forEach(function(photo) { %>
-                                            <img src="data:<%= photo.contentType %>;base64,<%= photo.data.toString('base64') %>" alt="<%= news.titre %>" style="max-width: 200px; margin: 10px;"/>
-                                        <% }) %>
-                                    </p>
-                                    <button onclick="window.location.href='/news/<%= news._id %>/editNews'">Modifiez cette annonce</button>
-                                    <button onclick="window.location.href='/news/<%= news._id %>'">Posez une question</button>
-                                    <% if (news.questions.length > 0) { %>
-                                        <h2>Questions posées :</h2>
-                                            <% news.questions.forEach(question => { %>
-                                                <p><strong><%= question.user.login %></strong>  le : <strong><%= question.date.toLocaleDateString()%> </strong>a demandé :</p>
-                                                <p><%= question.contenu %></p>
-                                                <h4>Réponses :</h4>
-                                                <ul>
-                                                    <% question.reponses.forEach(reponse => { %>
-                                                        <li><%= reponse.contenu %> - par <strong><%= reponse.user.login %></strong> le : <strong><%= reponse.date.toLocaleDateString()%></strong> </li>
-                                                    <% }) %>
-                                                </ul>
-                                                <button onclick="window.location.href='/news/<%= news._id %>/questions/<%= question._id %>'">Répondre à la question</button>
-                                            <% }) %>
-                                    <% } else { %>
-                                        <p>Aucune question publiée</p>
-                                    <% } %>
-                                </li>
+                                <div class="news-card">
+                                    <% news.photos.forEach(function(photo) { %>
+                                        <img src="data:<%= photo.contentType %>;base64,<%= photo.data.toString('base64') %>" alt="<%= news.titre %>" class="news-logo"/>
+                                    <% }) %>
+                                    <h3><%=news.titre%></h3>
+                                    <p><%=news.typeBien%></p>
+                                    <p><%=news.description%></p>
+                                    <p><%=news.prix%> €</p>
+                                    <p><%=news.statutPublication%></p>
+                                    <div class="news-card-button">
+                                        <button class="news-button news-button-question" onclick="window.location.href='/news/<%= news._id %>'">Questions (<%=news.questions.length%>)</button>
+                                        <button class="news-button news-button-edit" onclick="window.location.href='/news/<%= news._id %>/editNews'">Modifier</button>
+                                        <button class="news-button news-button-edit" onclick="window.location.href='/news/<%= news._id %>/deleteNews'">Supprimer</button>
+                                    </div>
+                                </div>
                             <% }); %>
-                        </ul>
                     <% } else { %>
                         <p>Aucune news publiée.</p>
                     <% } %>

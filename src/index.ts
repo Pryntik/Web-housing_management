@@ -7,7 +7,7 @@ import multer from 'multer';
 import { home, error, addNews, about, login, signup, formQuestion, formReponse, formEdit } from './controlleur/controlleur';
 import { createUser, verifConnexion } from './controlleur/user_controlleur';
 import { ensureAuthenticated, verifRole } from './passport-config';
-import { addResponse, askQuestion, editNews, uploadNews } from './controlleur/news_controlleur';
+import { addResponse, askQuestion, deleteNews, editNews, uploadNews } from './controlleur/news_controlleur';
 
 /* Initialisation du serveur */
 export const app = express();
@@ -57,6 +57,7 @@ app.get('/login', login);
 app.get('/signup', signup);
 app.get('/news/:newsId', ensureAuthenticated, verifRole('utilisateur'), formQuestion);
 app.get('/news/:newsId/editNews', ensureAuthenticated, verifRole('agent'), formEdit);
+app.get('/news/:newsId/deleteNews', ensureAuthenticated, verifRole('agent'), deleteNews);
 app.get('/news/:newsId/questions/:questionId', ensureAuthenticated, verifRole('agent'), formReponse);
 
 // Post

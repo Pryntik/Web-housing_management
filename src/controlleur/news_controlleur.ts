@@ -179,3 +179,18 @@ export const editNews = [
         }
     }
 ];
+
+export const deleteNews = [
+    upload.array('photos'), // Middleware pour gérer les images
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { newsId } = req.params;
+            await NewsModel.deleteOne({ _id: newsId });
+
+            // Redirection à l'accueil si la modification s'est effectuée
+            res.redirect("/");
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    }
+];

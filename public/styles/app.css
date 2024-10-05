@@ -18,3 +18,33 @@
 .grid-logo {
     width: 40%;
 }
+
+.news-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.news-card > * {
+    margin: 0px 5px 0px 5px;
+}
+
+.news-logo {
+    width: 10%;
+    min-width: 100px;
+}
+
+.news-card-button {
+    display: flex;
+    flex-direction: column;
+    justify-items: flex-end;
+}
+
+.news-card-button > button {
+    margin: 5px;
+}
