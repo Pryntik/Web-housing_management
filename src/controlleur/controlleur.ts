@@ -39,6 +39,17 @@ export const signup = async( req: Request, res: Response) => {
     res.render('signup', {pageName: 'Signup', logStatus: logStatus});
 }
 
+export const formConsultationQuestion = async (req: Request, res: Response) => {
+    const { newsId } = req.params;
+    const news = await NewsModel.findById(newsId);
+
+    if (!news) {
+        return res.status(404).send('Annonce non trouvé');
+    }
+
+    res.render('consultationQuestion', { news, pageName: "Liste Question Réponses Annonce" });
+}
+
 export const formQuestion = async (req: Request, res: Response) => {
     const { newsId } = req.params;
     const news = await NewsModel.findById(newsId);

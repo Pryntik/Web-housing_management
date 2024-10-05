@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <link href="../styles/master.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div class="app">
+            <nav class="navBar">
+                <div class="nav-page">
+                    <button class="<%=pageName == 'Home' ? 'page-active' : ''%> nav-button" onclick="window.location='/';">Home</button>
+                    <button class="<%=pageName == 'News' ? 'page-active' : ''%> nav-button" onclick="window.location='/addnews';">Nouvelle annonce</button>
+                    <button class="<%=pageName == 'About' ? 'page-active' : ''%> nav-button" onclick="window.location='/about';">About</button>
+                </div>
+                <div class="nav-log">
+                    <button class="<%=pageName == 'Signup' ? 'page-active' : ''%> nav-button" onclick="window.location='/signup';">Sign up</button>
+                    <button class="<%=pageName == 'Login' ? 'page-active' : ''%> nav-button" onclick="window.location='/login';">Log in</button>
+                </div>
+            </nav>
+            <div class="logBar">
+                <div class="logStatus">
+                    <span class="log-text"><%=logStatus == true ? 'Connected' : 'Disconnected'%></span>
+                    <img class="log-icon" src="<%=logStatus == true ? '/images/logo-connected.png' : '/images/logo-disconnected.png'%>" alt="log-icon">
+                </div>
+            </div>
+            <div class="center-gray-block w40 h40">
+                <h1 class="login-title"><%=pageName%> page</h1>
+                <button onclick="window.location.href='/news/<%= news._id %>/questions'">Posez une question</button>
+                <% if (news.questions.length > 0) { %>
+                    <h2>Questions posées :</h2>
+                        <% news.questions.forEach(question => { %>
+                            <p><strong><%= question.user.login %></strong>  le : <strong><%= question.date.toLocaleDateString()%> </strong>a demandé :</p>
+                            <p><%= question.contenu %></p>
+                            <h4>Réponses :</h4>
+                            <ul>
+                                <% question.reponses.forEach(reponse => { %>
+                                    <li><%= reponse.contenu %> - par <strong><%= reponse.user.login %></strong> le : <strong><%= reponse.date.toLocaleDateString()%></strong> </li>
+                                <% }) %>
+                            </ul>
+                            <button onclick="window.location.href='/news/<%= news._id %>/questions/<%= question._id %>'">Répondre à la question</button>
+                        <% }) %>
+                <% } else { %>
+                    <p>Aucune question publiée</p>
+                <% } %>
+            </div>
+        </div>
+    </body>
+</html>
