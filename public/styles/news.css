@@ -29,7 +29,7 @@
     justify-content: space-around;
 }
 
-.news-title {
+.news-input-title {
     height: 40px;
     border-radius: 10px;
 }
@@ -37,7 +37,7 @@
     width: 100px;
     height: 40px;
     border-radius: 10px;
-    background-color: var(--sky-blue);
+    background-color: var(--light-blue);
     cursor: pointer;
     margin-top: 20px;
     align-self: flex-end;

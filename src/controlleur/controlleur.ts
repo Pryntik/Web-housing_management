@@ -1,42 +1,35 @@
-import { app, logStatus } from "..";
 import { Request, Response, NextFunction } from "express";
 import { NewsModel } from '../mongoose_news';
 
 export const home = async (req: Request, res: Response, next: NextFunction) => {
-    app.locals.pageName = "Home";
     try {
-        const news = await NewsModel.find({ statutPublication: 'publiee' });
-
+        const news = await NewsModel.find();
         // Rendre la vue avec les annonces
-        res.render('home', {
-            pageName: 'Home',
-            logStatus: logStatus,
-            news: news // Passez les annonces à la vue
-        });
+        res.render('home', {pageName: 'Home', news: news});
     } catch (error) {
-        console.error('Erreur lors de la récupération des newss :', error);
+        console.error('Erreur lors de la récupération des annonces :', error);
         res.status(500).send('Erreur interne du serveur.');
     }
 };
 
 export const error = async(req: Request, res: Response) => {
-    res.render('error', {pageName: 'Error', logStatus: logStatus});
+    res.render('error', {pageName: 'Error'});
 }
 
 export const addNews = async(req: Request, res: Response) => {
-    res.render('news', {pageName: 'News', logStatus: logStatus});
+    res.render('news', {pageName: 'News'});
 }
 
 export const about = async(req: Request, res: Response) => {
-    res.render('about', {pageName: 'About', logStatus: logStatus});
+    res.render('about', {pageName: 'About'});
 }
 
 export const login = async( req: Request, res: Response) => {
-    res.render('login', {pageName: 'Login', logStatus: logStatus});
+    res.render('login', {pageName: 'Login'});
 }
 
 export const signup = async( req: Request, res: Response) => {
-    res.render('signup', {pageName: 'Signup', logStatus: logStatus});
+    res.render('signup', {pageName: 'Signup'});
 }
 
 export const formConsultationQuestion = async (req: Request, res: Response) => {
@@ -47,7 +40,7 @@ export const formConsultationQuestion = async (req: Request, res: Response) => {
         return res.status(404).send('Annonce non trouvé');
     }
 
-    res.render('consultationQuestion', { news, pageName: "Liste Question Réponses Annonce" });
+    res.render('consultationQuestion', {news, pageName: "Liste Question Réponses Annonce"});
 }
 
 export const formQuestion = async (req: Request, res: Response) => {
@@ -58,22 +51,22 @@ export const formQuestion = async (req: Request, res: Response) => {
         return res.status(404).send('Annonce non trouvé');
     }
 
-    res.render('question', { news, pageName: "Question Annonce" });
+    res.render('question', {news, pageName: "Question Annonce"});
 };
 
 export const formReponse = async (req: Request, res: Response) => {
     const { newsId, questionId } = req.params;
     const news = await NewsModel.findById(newsId);
     if (!news) {
-        return res.status(404).json({ message: 'Annonce non trouvée.' });
+        return res.status(404).json({message: 'Annonce non trouvée.'});
     }
 
     const question = news.questions.id(questionId);
     if (!question) {
-        return res.status(404).json({ message: 'Question non trouvée.' });
+        return res.status(404).json({message: 'Question non trouvée.'});
     }
 
-    res.render('reponse', { news, question, pageName: 'Réponse Annonce' });
+    res.render('reponse', {news, question, pageName: 'Réponse Annonce' });
 };
 
 export const formEdit = async (req: Request, res: Response) => {
@@ -84,5 +77,5 @@ export const formEdit = async (req: Request, res: Response) => {
         return res.status(404).send('Annonce non trouvé');
     }
 
-    res.render('edit', { news, pageName: 'Modification Annonce'});
+    res.render('edit', {news, pageName: 'Modification Annonce'});
 };

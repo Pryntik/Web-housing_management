@@ -18,7 +18,7 @@
             <div class="logBar">
                 <div class="logStatus">
                     <span class="log-text"><%=logStatus == true ? 'Connected' : 'Disconnected'%></span>
-                    <img class="log-icon" src="<%=logStatus == true ? '/images/logo-connected.png' : '/images/logo-disconnected.png'%>" alt="log-icon">
+                    <img class="log-icon" src="<%=logStatus == true ? '/images/logo-connected.png' : '/images/logo-disconnected.png'%>" alt="log-icon" onclick="window.location='/logout';">
                 </div>
             </div>
             <div class="center-gray-block w60 h60">
@@ -31,15 +31,15 @@
                                     <% news.photos.forEach(function(photo) { %>
                                         <img src="data:<%= photo.contentType %>;base64,<%= photo.data.toString('base64') %>" alt="<%= news.titre %>" class="news-logo"/>
                                     <% }) %>
-                                    <h3><%=news.titre%></h3>
-                                    <p><%=news.typeBien%></p>
-                                    <p><%=news.description%></p>
-                                    <p><%=news.prix%> €</p>
-                                    <p><%=news.statutPublication%></p>
+                                    <h3 class="news-title"><%=news.titre%></h3>
+                                    <span class="news-type"><%=news.typeBien%></span>
+                                    <span class="news-price"><%=news.prix%> €</span>
+                                    <span class="news-status"><%=news.statutPublication%></span>
+                                    <p class="news-description"><%=news.description%></p>
                                     <div class="news-card-button">
                                         <button class="news-button news-button-question" onclick="window.location.href='/news/<%= news._id %>'">Questions (<%=news.questions.length%>)</button>
                                         <button class="news-button news-button-edit" onclick="window.location.href='/news/<%= news._id %>/editNews'">Modifier</button>
-                                        <button class="news-button news-button-edit" onclick="window.location.href='/news/<%= news._id %>/deleteNews'">Supprimer</button>
+                                        <button class="news-button news-button-delete" onclick="window.location.href='/news/<%= news._id %>/deleteNews'">Supprimer</button>
                                     </div>
                                 </div>
                             <% }); %>

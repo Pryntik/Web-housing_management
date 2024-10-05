@@ -6,6 +6,7 @@
 
 .log-icon {
     width: 30px;
+    cursor: pointer;
 }
 
 .log-text {
@@ -42,6 +43,6 @@
 .form-input-submit {
     width: 100px;
     align-self: flex-end;
-    background-color: var(--sky-blue);
+    background-color: var(--light-blue);
     cursor: pointer;
 }

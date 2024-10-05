@@ -63,3 +63,22 @@ export const createUser = async(req: Request, res: Response, next: NextFunction)
         return res.redirect('/error');
     }
 }
+
+export const logout = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        req.logout((err) => {
+            if (err) {
+                return next(err);
+            }
+            app.locals.logStatus = false;
+            req.session.destroy((err) => {
+                if (err) {
+                    return next(err);
+                }
+                return res.redirect('/');
+            });
+        });
+    } catch (err) {
+        res.status(400).json({ error: err });
+    }
+};

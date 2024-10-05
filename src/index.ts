@@ -5,13 +5,13 @@ import path from 'path';
 import mongoose from 'mongoose';
 import multer from 'multer';
 import { home, error, addNews, about, login, signup, formQuestion, formReponse, formEdit, formConsultationQuestion } from './controlleur/controlleur';
-import { createUser, verifConnexion } from './controlleur/user_controlleur';
+import { createUser, logout, verifConnexion } from './controlleur/user_controlleur';
 import { ensureAuthenticated, verifRole } from './passport-config';
 import { addResponse, askQuestion, deleteNews, editNews, uploadNews } from './controlleur/news_controlleur';
 
 /* Initialisation du serveur */
 export const app = express();
-export let logStatus = false;
+app.locals.logStatus = false;
 const port = 3000;
 
 // Configure multer pour gérer les fichiers
@@ -53,6 +53,7 @@ app.get('/', home);
 app.get('/error', error);
 app.get('/addnews', ensureAuthenticated, verifRole('agent'), addNews); 
 app.get('/about', about);
+app.get('/logout', logout);
 app.get('/login', login);
 app.get('/signup', signup);
 app.get('/news/:newsId', ensureAuthenticated, formConsultationQuestion);
