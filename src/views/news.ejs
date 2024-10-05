@@ -8,7 +8,6 @@
             <button class="<%=pageName == 'Home' ? 'page-active' : ''%> nav-button" onclick="window.location='/';">Home</button>
             <button class="<%=pageName == 'News' ? 'page-active' : ''%> nav-button" onclick="window.location='/addnews';">Nouvelle annonce</button>
             <button class="<%=pageName == 'About' ? 'page-active' : ''%> nav-button" onclick="window.location='/about';">About</button>
-            <button class="<%=pageName == 'News Privees' ? 'page-active' : ''%> nav-button" onclick="window.location='/newsPrivees';">Annonces Privées</button>
         </div>
         <div class="nav-log">
             <button class="<%=pageName == 'Signup' ? 'page-active' : ''%> nav-button" onclick="window.location='/signup';">Sign up</button>
@@ -36,8 +35,8 @@
                     </select>
                     <label for="statutPublication">Statut de publication</label>
                     <select id="statutPublication" name="statutPublication" required>
-                        <option value="publiee" <%= typeof news !== 'undefined' && news.statutPublication === 'publiee' ? 'selected' : '' %>>Publiée</option>
-                        <option value="non publiee" <%= typeof news !== 'undefined' && news.statutPublication === 'non publiee' ? 'selected' : '' %>>Non Publiée</option>
+                        <option value="publique" <%= typeof news !== 'undefined' && news.statutPublication === 'publique' ? 'selected' : '' %>>Publique</option>
+                        <option value="prive" <%= typeof news !== 'undefined' && news.statutPublication === 'prive' ? 'selected' : '' %>>Privé</option>
                     </select>
                     <label for="statutBien">Statut du bien</label>
                     <select id="statutBien" name="statutBien" required>
