@@ -4,10 +4,10 @@ import express from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
 import multer from 'multer';
-import { home, error, addNews, about, login, signup, formQuestion, formReponse, formEdit, formConsultationQuestion } from './controlleur/controlleur';
+import { home, error, addNews, about, login, signup, formQuestion, formReponse, formEdit, formConsultationQuestion, visuNewsPrivee } from './controlleur/controlleur';
 import { createUser, logout, verifConnexion } from './controlleur/user_controlleur';
 import { ensureAuthenticated, verifRole } from './passport-config';
-import { addResponse, askQuestion, deleteNews, editNews, uploadNews } from './controlleur/news_controlleur';
+import { addResponse, askQuestion, deleteNews, editNews, publierNews, uploadNews } from './controlleur/news_controlleur';
 
 /* Initialisation du serveur */
 export const app = express();
@@ -28,7 +28,7 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/mydatabase'
 
 // Configuration de la session
 app.use(session({
-    secret: 'secret', // Change cela pour un secret plus sûr
+    secret: 'secret',
     resave: false,
     saveUninitialized: true,
 }));
@@ -56,6 +56,7 @@ app.get('/about', about);
 app.get('/logout', logout);
 app.get('/login', login);
 app.get('/signup', signup);
+app.get('/newsPrivees', ensureAuthenticated, verifRole('agent'), visuNewsPrivee);
 app.get('/news/:newsId', ensureAuthenticated, formConsultationQuestion);
 app.get('/news/:newsId/questions', ensureAuthenticated, verifRole('utilisateur'), formQuestion);
 app.get('/news/:newsId/editNews', ensureAuthenticated, verifRole('agent'), formEdit);
@@ -69,3 +70,4 @@ app.post('/signup/createUser', createUser);
 app.post('/news/:newsId/ask-question', askQuestion);
 app.post('/news/:newsId/questions/:questionId/repondre', addResponse);
 app.post('/news/:newsId/editNews/validerModif', editNews);
+app.post('/newsPrivee/:newsId/publier', publierNews);

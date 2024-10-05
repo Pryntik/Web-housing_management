@@ -180,6 +180,23 @@ export const editNews = [
     }
 ];
 
+export const publierNews = async (req: Request, res: Response) => {
+    const { id } = req.params; // Récupérer l'ID de l'annonce à publier
+    console.log("ID de l'annonce :", req.params.id);
+    try {
+        // Mettre à jour l'annonce avec le statut "publiée"
+        const annonce = await NewsModel.findByIdAndUpdate(id, { statutPublication: 'publiee' });
+        if (!annonce) {
+            return res.status(404).send('Annonce non trouvée');
+        }
+
+        res.redirect('/');
+    } catch (error) {
+        console.error('Erreur lors de la publication de l\'annonce :', error);
+        res.status(500).send('Erreur interne du serveur');
+    }
+};
+
 export const deleteNews = [
     upload.array('photos'), // Middleware pour gérer les images
     async (req: Request, res: Response, next: NextFunction) => {

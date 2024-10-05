@@ -1,13 +1,39 @@
 <html>
-<body>
-    <h1>Répondre à la question</h1>
-    <h2>Annonce : <%= news.titre %></h2>
-    <p>Question : <%= question.contenu %></p>
+    <head>
+        <link href="../styles/master.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div class="app">
+            <nav class="navBar">
+                <div class="nav-page">
+                    <button class="<%=pageName == 'Home' ? 'page-active' : ''%> nav-button" onclick="window.location='/';">Home</button>
+                    <button class="<%=pageName == 'News' ? 'page-active' : ''%> nav-button" onclick="window.location='/addnews';">Nouvelle annonce</button>
+                    <button class="<%=pageName == 'About' ? 'page-active' : ''%> nav-button" onclick="window.location='/about';">About</button>
+                    <button class="<%=pageName == 'News Privees' ? 'page-active' : ''%> nav-button" onclick="window.location='/newsPrivees';">Annonces Privées</button>
+                </div>
+                <div class="nav-log">
+                    <button class="<%=pageName == 'Signup' ? 'page-active' : ''%> nav-button" onclick="window.location='/signup';">Sign up</button>
+                    <button class="<%=pageName == 'Login' ? 'page-active' : ''%> nav-button" onclick="window.location='/login';">Log in</button>
+                </div>
+            </nav>
+            <div class="logBar">
+                <div class="logStatus">
+                    <span class="log-text"><%=logStatus == true ? 'Connected' : 'Disconnected'%></span>
+                    <img class="log-icon" src="<%=logStatus == true ? '/images/logo-connected.png' : '/images/logo-disconnected.png'%>" alt="log-icon" onclick="window.location='/logout';">
+                </div>
+            </div>
+            <div class="center-gray-block w60 h60">
+                <h1 class="app-title"><%=pageName%> page</h1>
+                <h1>Répondre à la question</h1>
+                <h2>Annonce : <%= news.titre %></h2>
+                <p>Question : <%= question.contenu %></p>
 
-    <form action="/news/<%= news._id %>/questions/<%= question._id %>/repondre" method="POST">
-        <label for="reponse">Votre réponse :</label>
-        <textarea name="reponse" id="reponse" rows="4" cols="50"></textarea>
-        <button type="submit">Envoyer la réponse</button>
-    </form>
-</body>
+                <form action="/news/<%= news._id %>/questions/<%= question._id %>/repondre" method="POST">
+                    <label for="reponse">Votre réponse :</label>
+                    <textarea name="reponse" id="reponse" rows="4" cols="50"></textarea>
+                    <button type="submit">Envoyer la réponse</button>
+                </form>
+            </div>
+        </div>
+    </body>
 </html>

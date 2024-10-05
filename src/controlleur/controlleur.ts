@@ -32,6 +32,17 @@ export const signup = async( req: Request, res: Response) => {
     res.render('signup', {pageName: 'Signup'});
 }
 
+export const visuNewsPrivee = async (req: Request, res: Response) => {
+    try {
+        const news = await NewsModel.find();
+    
+        res.render('annoncePrivee', {pageName: 'Private News', news: news});
+    } catch (error) {
+        console.error('Erreur lors de la récupération des annonces :', error);
+        res.status(500).send('Erreur interne du serveur.');
+    }
+}
+
 export const formConsultationQuestion = async (req: Request, res: Response) => {
     const { newsId } = req.params;
     const news = await NewsModel.findById(newsId);
