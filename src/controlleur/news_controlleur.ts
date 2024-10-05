@@ -1,5 +1,5 @@
 import { Response, Request, NextFunction } from "express";
-import { AnnonceModel, IAnnonceImmobiliere } from '../mongoose_annonce';
+import { NewsModel, INewsImmobiliere } from '../mongoose_news';
 import { IUser, UserModel } from "../mongoose_user";
 import multer from 'multer';
 
@@ -32,8 +32,8 @@ export const uploadNews = [
                 }));
             }
 
-            // Créer une nouvelle instance d'annonce
-            const nouvelleAnnonce: IAnnonceImmobiliere = new AnnonceModel({
+            // Créer une nouvelle instance d'news
+            const nouvelleNews: INewsImmobiliere = new NewsModel({
                 titre,
                 typeBien,
                 statutPublication,
@@ -45,20 +45,20 @@ export const uploadNews = [
             });
 
             // Sauvegarde l'annonce dans la base de données
-            const annonceSauvegardee = await nouvelleAnnonce.save();
+            const newsSauvegardee = await nouvelleNews.save();
 
             // Redirection à l'accueil si la création s'est effectuée
-            //res.status(201).json(annonceSauvegardee); Vérification que l'annonce soit bien crée.
+            //res.status(201).json(newsSauvegardee); Vérification que l'annonce soit bien crée.
             res.redirect("/");
         } catch (error) {
-            console.error('Erreur lors de la création de l\'annonce :', error);
+            console.error('Erreur lors de la création de l\'news :', error);
             res.status(500).send('Erreur interne du serveur.');
         }
     }
 ];
 
 export const askQuestion = async (req: Request, res: Response) => {
-    const { annonceId } = req.params; 
+    const { newsId } = req.params; 
     const { contenu } = req.body;
 
     const user = req.user as IUser;
@@ -70,22 +70,22 @@ export const askQuestion = async (req: Request, res: Response) => {
         }
 
         // Cherche l'annonce dans la base de données pour l'update
-        const annonce = await AnnonceModel.findById(annonceId);
+        const news = await NewsModel.findById(newsId);
         const reponses: { user: IUser; contenu: string; date: Date  }[] = [];
-        if (!annonce) {
-            return res.status(404).send('Annonce non trouvée');
+        if (!news) {
+            return res.status(404).send('News non trouvée');
         }
 
-        annonce.questions.push({
+        news.questions.push({
             user,
             contenu,
             reponses,
             date: new Date()
         });
 
-        await annonce.save();
+        await news.save();
 
-        res.status(200).json(annonce);
+        res.status(200).json(news);
     } catch (error) {
         console.error('Erreur lors de la création de la question:', error);
         res.status(500).send('Internal Server Error');
@@ -93,7 +93,7 @@ export const askQuestion = async (req: Request, res: Response) => {
 };
 
 export const addResponse = async (req: Request, res: Response, next: NextFunction) => {
-    const { annonceId, questionId } = req.params;
+    const { newsId, questionId } = req.params;
     const { reponse } = req.body;
 
     const userId = req.user as IUser;
@@ -105,13 +105,13 @@ export const addResponse = async (req: Request, res: Response, next: NextFunctio
         }
 
         // Chercher l'annonce correspondante
-        const annonce = await AnnonceModel.findById(annonceId);
-        if (!annonce) {
-            return res.status(404).json({ message: 'Annonce non trouvée.' });
+        const news = await NewsModel.findById(newsId);
+        if (!news) {
+            return res.status(404).json({ message: 'News non trouvée.' });
         }
 
         // Chercher la question à laquelle on veut répondre
-        const question = annonce.questions.id(questionId);
+        const question = news.questions.id(questionId);
         if (!question) {
             return res.status(404).json({ message: 'Question non trouvée.' });
         }
@@ -120,7 +120,7 @@ export const addResponse = async (req: Request, res: Response, next: NextFunctio
         question.reponses.push({ user: userId, contenu: reponse, date: new Date() });
 
         // Sauvegarder l'annonce avec la nouvelle réponse
-        await annonce.save();
+        await news.save();
 
         res.status(200).json({ message: 'Réponse ajoutée avec succès.' });
     } catch (error) {
@@ -128,11 +128,11 @@ export const addResponse = async (req: Request, res: Response, next: NextFunctio
     }
 };
 
-export const modifAnnonce = [
+export const editNews = [
     upload.array('photos'), // Middleware pour gérer les images
     async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { annonceId } = req.params;
+            const { newsId } = req.params;
             const {
                 titre,
                 typeBien,
@@ -154,8 +154,8 @@ export const modifAnnonce = [
                 }));
             }
 
-            const updatedAnnonce = await AnnonceModel.findByIdAndUpdate(
-                annonceId,
+            const updatedNews = await NewsModel.findByIdAndUpdate(
+                newsId,
                 { 
                     titre,
                     typeBien,
@@ -168,7 +168,7 @@ export const modifAnnonce = [
                 },
             );
 
-            if (!updatedAnnonce) {
+            if (!updatedNews) {
                 return res.status(404).send('Annonce non trouvée');
             }
 

@@ -7,7 +7,7 @@ import multer from 'multer';
 import { home, error, addNews, about, login, signup, formQuestion, formReponse, formModif } from './controlleur/controlleur';
 import { createUser, verifConnexion } from './controlleur/user_controlleur';
 import { ensureAuthenticated, verifRole } from './passport-config';
-import { addResponse, askQuestion, modifAnnonce, uploadNews } from './controlleur/annonce_controlleur';
+import { addResponse, askQuestion, editNews, uploadNews } from './controlleur/news_controlleur';
 
 /* Initialisation du serveur */
 export const app = express();
@@ -55,15 +55,15 @@ app.get('/addnews', ensureAuthenticated, verifRole('agent'), addNews);
 app.get('/about', about);
 app.get('/login', login);
 app.get('/signup', signup);
-app.get('/annonces/:annonceId', ensureAuthenticated, verifRole('utilisateur'), formQuestion);
-app.get('/annonces/:annonceId/modifierAnnonce', ensureAuthenticated, verifRole('agent'), formModif);
-app.get('/annonces/:annonceId/questions/:questionId', ensureAuthenticated, verifRole('agent'), formReponse);
+app.get('/news/:newsId', ensureAuthenticated, verifRole('utilisateur'), formQuestion);
+app.get('/news/:newsId/editNews', ensureAuthenticated, verifRole('agent'), formModif);
+app.get('/news/:newsId/questions/:questionId', ensureAuthenticated, verifRole('agent'), formReponse);
 
 // Post
-app.post('/addnews/uploadnews', ensureAuthenticated , uploadNews); //checkRole, modifierAnnonce); // A FAIRE
+app.post('/addnews/uploadnews', ensureAuthenticated , uploadNews); //checkRole, editNews); // A FAIRE
 app.post('/login/check', verifConnexion);
 app.post('/signup/createUser', createUser);
-app.post('/annonces/:annonceId/ask-question', askQuestion);
-app.post('/annonces/:annonceId/questions/:questionId/repondre', addResponse);
-app.post('/annonces/:annonceId/modifierAnnonce/validerModif', modifAnnonce);
+app.post('/news/:newsId/ask-question', askQuestion);
+app.post('/news/:newsId/questions/:questionId/repondre', addResponse);
+app.post('/news/:newsId/editNews/validerModif', editNews);
 

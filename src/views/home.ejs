@@ -27,25 +27,25 @@
                     <% if (news && news.length > 0) { %>
                         <h2>Mes Annonces :</h2>
                         <ul>
-                            <% news.forEach(function(annonce) { %>
+                            <% news.forEach(function(news) { %>
                                 <li>
-                                    <h3><%= annonce.titre %></h3>
-                                    <p>Type: <%= annonce.typeBien %></p>
-                                    <p>Description: <%= annonce.description %></p>
-                                    <p>Prix: <%= annonce.prix %> €</p>
-                                    <p>Statut: <%= annonce.statutPublication %></p>
+                                    <h3><%= news.titre %></h3>
+                                    <p>Type: <%= news.typeBien %></p>
+                                    <p>Description: <%= news.description %></p>
+                                    <p>Prix: <%= news.prix %> €</p>
+                                    <p>Statut: <%= news.statutPublication %></p>
                                     <p>
-                                        <% if (annonce.photos.length > 0) { %>
-                                            <% annonce.photos.forEach(function(photo) { %>
-                                                <img src="data:<%= photo.contentType %>;base64,<%= photo.data.toString('base64') %>" alt="<%= annonce.titre %>" style="max-width: 200px; margin: 10px;"/>
+                                        <% if (news.photos.length > 0) { %>
+                                            <% news.photos.forEach(function(photo) { %>
+                                                <img src="data:<%= photo.contentType %>;base64,<%= photo.data.toString('base64') %>" alt="<%= news.titre %>" style="max-width: 200px; margin: 10px;"/>
                                             <% }) %>
                                         <% } %>
                                     </p>
-                                    <button onclick="window.location.href='/annonces/<%= annonce._id %>/modifierAnnonce'">Modifiez cette annonce</button>
-                                    <button onclick="window.location.href='/annonces/<%= annonce._id %>'">Posez une question</button>
-                                    <% if (annonce.questions.length > 0) { %>
+                                    <button onclick="window.location.href='/news/<%= news._id %>/editNews'">Modifiez cette annonce</button>
+                                    <button onclick="window.location.href='/news/<%= news._id %>'">Posez une question</button>
+                                    <% if (news.questions.length > 0) { %>
                                         <h2>Questions posées :</h2>
-                                            <% annonce.questions.forEach(question => { %>
+                                            <% news.questions.forEach(question => { %>
                                                 <p><strong><%= question.user.login %></strong>  le : <strong><%= question.date.toLocaleDateString()%> </strong>a demandé :</p>
                                                 <p><%= question.contenu %></p>
                                                 <h4>Réponses :</h4>
@@ -54,7 +54,7 @@
                                                         <li><%= reponse.contenu %> - par <strong><%= reponse.user.login %></strong> le : <strong><%= reponse.date.toLocaleDateString()%></strong> </li>
                                                     <% }) %>
                                                 </ul>
-                                                <button onclick="window.location.href='/annonces/<%= annonce._id %>/questions/<%= question._id %>'">Répondre à la question</button>
+                                                <button onclick="window.location.href='/news/<%= news._id %>/questions/<%= question._id %>'">Répondre à la question</button>
                                             <% }) %>
                                     <% } else { %>
                                         <p>Aucune question publiée</p>
@@ -63,7 +63,7 @@
                             <% }); %>
                         </ul>
                     <% } else { %>
-                        <p>Aucune annonce publiée.</p>
+                        <p>Aucune news publiée.</p>
                     <% } %>
                 </div>
             </div>

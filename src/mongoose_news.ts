@@ -47,7 +47,7 @@ export interface IReponse {
 }
 
 // Interface pour une annonce immobilière
-export interface IAnnonceImmobiliere extends Document {
+export interface INewsImmobiliere extends Document {
     titre: string;
     typeBien: TypeBien;
     statutPublication: StatutPublication;
@@ -60,8 +60,8 @@ export interface IAnnonceImmobiliere extends Document {
     reponses: IReponse[]; // Liste des réponses fournies par les agents
 }
 
-// Schéma pour une Annonce
-export const AnnonceSchema = new mongoose.Schema({
+// Schéma pour une News
+export const NewsSchema = new mongoose.Schema({
     titre: { type: String, required: true },
     typeBien: { type: String, enum: ['vente', 'location'], required: true },
     statutPublication: { type: String, enum: ['publiee', 'non publiee'], required: true },
@@ -76,4 +76,4 @@ export const AnnonceSchema = new mongoose.Schema({
     questions: [ QuestionSchema ]
 });
 
-export const AnnonceModel = mongoose.model<IAnnonceImmobiliere>('Annonce', AnnonceSchema);
+export const NewsModel = mongoose.model<INewsImmobiliere>('News', NewsSchema);

@@ -22,37 +22,37 @@
         </div>
         <div class="center-gray-block w60 h60">
             <h1 class="login-title"><%=pageName%> page</h1>
-                <form action="/annonces/<%= annonce._id %>/modifierAnnonce/validerModif" method="POST" enctype="multipart/form-data">
+                <form action="/news/<%= news._id %>/editNews/validerModif" method="POST" enctype="multipart/form-data">
                     <div class="form-button-edit">
-                        <input id="titre" class="form-input form-input-text" name="titre" type="text" autocomplete="titre" placeholder="Titre de l'annonce" value="<%= typeof annonce !== 'undefined' ? annonce.titre : '' %>" required autofocus>
+                        <input id="titre" class="form-input form-input-text" name="titre" type="text" autocomplete="titre" placeholder="Titre de l'news" value="<%= typeof news !== 'undefined' ? news.titre : '' %>" required autofocus>
                 
                         <label for="typeBien">Type de bien :</label>
                         <select id="typeBien" name="typeBien" required>
-                            <option value="vente" <%= typeof annonce !== 'undefined' && annonce.typeBien === 'vente' ? 'selected' : '' %>>Vente</option>
-                            <option value="location" <%= typeof annonce !== 'undefined' && annonce.typeBien === 'location' ? 'selected' : '' %>>Location</option>
+                            <option value="vente" <%= typeof news !== 'undefined' && news.typeBien === 'vente' ? 'selected' : '' %>>Vente</option>
+                            <option value="location" <%= typeof news !== 'undefined' && news.typeBien === 'location' ? 'selected' : '' %>>Location</option>
                         </select>
                 
                         <label for="statutPublication">Statut de publication :</label>
                         <select id="statutPublication" name="statutPublication" required>
-                            <option value="publiee" <%= typeof annonce !== 'undefined' && annonce.statutPublication === 'publiee' ? 'selected' : '' %>>Publiée</option>
-                            <option value="non publiee" <%= typeof annonce !== 'undefined' && annonce.statutPublication === 'non publiee' ? 'selected' : '' %>>Non Publiée</option>
+                            <option value="publiee" <%= typeof news !== 'undefined' && news.statutPublication === 'publiee' ? 'selected' : '' %>>Publiée</option>
+                            <option value="non publiee" <%= typeof news !== 'undefined' && news.statutPublication === 'non publiee' ? 'selected' : '' %>>Non Publiée</option>
                         </select>
                 
                         <label for="statutBien">Statut du bien :</label>
                         <select id="statutBien" name="statutBien" required>
-                            <option value="disponible" <%= typeof annonce !== 'undefined' && annonce.statutBien === 'disponible' ? 'selected' : '' %>>Disponible</option>
-                            <option value="loue" <%= typeof annonce !== 'undefined' && annonce.statutBien === 'loue' ? 'selected' : '' %>>Loué</option>
-                            <option value="vendu" <%= typeof annonce !== 'undefined' && annonce.statutBien === 'vendu' ? 'selected' : '' %>>Vendu</option>
+                            <option value="disponible" <%= typeof news !== 'undefined' && news.statutBien === 'disponible' ? 'selected' : '' %>>Disponible</option>
+                            <option value="loue" <%= typeof news !== 'undefined' && news.statutBien === 'loue' ? 'selected' : '' %>>Loué</option>
+                            <option value="vendu" <%= typeof news !== 'undefined' && news.statutBien === 'vendu' ? 'selected' : '' %>>Vendu</option>
                         </select>
                 
                         <label for="description">Description :</label>
-                        <textarea id="description" name="description" rows="5" cols="30" required><%= typeof annonce !== 'undefined' ? annonce.description : '' %></textarea>
+                        <textarea id="description" name="description" rows="5" cols="30" required><%= typeof news !== 'undefined' ? news.description : '' %></textarea>
                 
                         <label for="prix">Prix :</label>
-                        <input type="number" id="prix" name="prix" value="<%= typeof annonce !== 'undefined' ? annonce.prix : '' %>" required>
+                        <input type="number" id="prix" name="prix" value="<%= typeof news !== 'undefined' ? news.prix : '' %>" required>
                 
                         <label for="dateDisponibilite">Date de disponibilité :</label>
-                        <input type="date" id="dateDisponibilite" name="dateDisponibilite" value="<%= typeof annonce !== 'undefined' ? annonce.dateDisponibilite.toISOString().substring(0, 10) : '' %>" required>
+                        <input type="date" id="dateDisponibilite" name="dateDisponibilite" value="<%= typeof news !== 'undefined' ? news.dateDisponibilite.toISOString().substring(0, 10) : '' %>" required>
                 
                         <!-- Drag & Drop zone pour les photos -->
                         <label for="photos">Photos (facultatif) :</label>

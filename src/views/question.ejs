@@ -1,8 +1,8 @@
 <html>
     <body>
-        <h1>Poser une question sur : <%= annonce.titre %></h1>
+        <h1>Poser une question sur : <%= news.titre %></h1>
         
-        <form action="/annonces/<%= annonce._id %>/ask-question" method="POST">
+        <form action="/news/<%= news._id %>/ask-question" method="POST">
             <label for="contenu">Votre question :</label>
             <textarea id="contenu" name="contenu" required></textarea>
             <br>
