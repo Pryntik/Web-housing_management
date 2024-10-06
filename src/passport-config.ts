@@ -62,7 +62,10 @@ export const verifRole = (role: RoleType) => {
       if (req.isAuthenticated() && (user.role.includes(role) || user.role.includes('admin'))) {
           return next();
       } else {
-          res.status(403).send('Accès interdit : rôle insuffisant');
+        res.render('error', {
+            pageName: 'Error',
+            errorContent: 'Accès interdit : rôle insuffisant'
+        });
       }
   };
 };

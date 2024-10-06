@@ -51,8 +51,11 @@ export const uploadNews = [
             // Redirection à l'accueil si la création s'est effectuée
             res.redirect("/");
         } catch (error) {
-            console.error('Erreur lors de la création de l\'news :', error);
-            res.status(500).send('Erreur interne du serveur.');
+            console.error('Erreur lors de la création de la news :', error);
+            res.render('error', {
+                pageName: 'Error',
+                errorContent: 'Erreur lors de la création de la news'
+            });
         }
     }
 ];
@@ -66,14 +69,20 @@ export const askQuestion = async (req: Request, res: Response) => {
     try {
 
         if (!contenu) {
-            return res.status(400).json({ message: 'Question non valide.' });
+            return res.render('error', {
+                pageName: 'Error',
+                errorContent: 'Question non valide'
+            });
         }
 
         // Cherche l'annonce dans la base de données pour l'update
         const news = await NewsModel.findById(newsId);
         const reponses: { user: IUser; contenu: string; date: Date  }[] = [];
         if (!news) {
-            return res.status(404).send('Annonce non trouvée');
+            return res.render('error', {
+                pageName: 'Error',
+                errorContent: 'Annonce non trouvée'
+            });
         }
 
         news.questions.push({
@@ -86,10 +95,12 @@ export const askQuestion = async (req: Request, res: Response) => {
         await news.save();
 
         res.redirect("/");
-        res.status(200).json(news);
     } catch (error) {
         console.error('Erreur lors de la création de la question:', error);
-        res.status(500).send('Internal Server Error');
+        res.render('error', {
+            pageName: 'Error',
+            errorContent: 'Erreur lors de la création de la question'
+        });
     }
 };
 
@@ -102,19 +113,28 @@ export const addResponse = async (req: Request, res: Response, next: NextFunctio
     try {
 
         if (!reponse) {
-            return res.status(400).json({ message: 'Reponse non valide.' });
+            return res.render('error', {
+                pageName: 'Error',
+                errorContent: 'Réponse non valide'
+            });
         }
 
         // Chercher l'annonce correspondante
         const news = await NewsModel.findById(newsId);
         if (!news) {
-            return res.status(404).json({ message: 'Annonce non trouvée.' });
+            return res.render('error', {
+                pageName: 'Error',
+                errorContent: 'Annonce non trouvée'
+            });
         }
 
         // Chercher la question à laquelle on veut répondre
         const question = news.questions.id(questionId);
         if (!question) {
-            return res.status(404).json({ message: 'Question non trouvée.' });
+            return res.render('error', {
+                pageName: 'Error',
+                errorContent: 'Question non trouvée'
+            });
         }
 
         // Ajouter la réponse à la question
@@ -124,9 +144,12 @@ export const addResponse = async (req: Request, res: Response, next: NextFunctio
         await news.save();
 
         res.redirect("/");
-        res.status(200).json({ message: 'Réponse ajoutée avec succès.' });
     } catch (error) {
-        next(error);
+        console.error('Erreur lors de l\'ajout d\'une réponse : ', error);
+        res.render('error', {
+            pageName: 'Error',
+            errorContent: 'Erreur lors de l\'ajout d\'une réponse'
+        });
     }
 };
 
@@ -171,13 +194,20 @@ export const editNews = [
             );
 
             if (!updatedNews) {
-                return res.status(404).send('Annonce non trouvée');
+                return res.render('error', {
+                    pageName: 'Error',
+                    errorContent: 'Annonce non trouvée'
+                });
             }
 
             // Redirection à l'accueil si la modification s'est effectuée
             res.redirect("/");
         } catch (error) {
-            res.status(500).send('Erreur interne du serveur.');
+            console.error('Erreur lors de l\'édition d\'une Annonce :', error);
+            res.render('error', {
+                pageName: 'Error',
+                errorContent: 'Erreur lors de l\'édition d\'une Annonce'
+            });
         }
     }
 ];
@@ -189,13 +219,19 @@ export const publierNews = async (req: Request, res: Response) => {
         // Mettre à jour l'annonce avec le statut "publiée"
         const annonce = await NewsModel.findByIdAndUpdate(id, { statutPublication: 'publique' });
         if (!annonce) {
-            return res.status(404).send('Annonce non trouvée');
+            return res.render('error', {
+                pageName: 'Error',
+                errorContent: 'Annonce non trouvée'
+            });
         }
 
         res.redirect('/');
     } catch (error) {
         console.error('Erreur lors de la publication de l\'annonce :', error);
-        res.status(500).send('Erreur interne du serveur');
+        res.render('error', {
+            pageName: 'Error',
+            errorContent: 'Erreur lors de la publication de l\'annonce'
+        });
     }
 };
 
@@ -209,7 +245,11 @@ export const deleteNews = [
             // Redirection à l'accueil si la modification s'est effectuée
             res.redirect("/");
         } catch (error) {
-            res.status(500).send(error);
+            console.error('Erreur lors de la suppression de l\'annonce :', error);
+            res.render('error', {
+                pageName: 'Error',
+                errorContent: 'Erreur lors de la suppression de l\'annonce'
+            });
         }
     }
 ];

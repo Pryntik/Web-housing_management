@@ -40,7 +40,11 @@ export const verifConnexion = async(req: Request, res: Response, next: NextFunct
             });
         })(req, res, next);
     } catch(err) {
-        res.status(400).json({error: err});
+        console.error('Erreur lors de la vérification de la connexion d\'un User : ', err);
+        res.render('error', {
+            pageName: 'Error',
+            errorContent: 'Erreur lors de la vérification de la connexion d\'un User'
+        });
     };
 }
 
@@ -60,7 +64,10 @@ export const createUser = async(req: Request, res: Response, next: NextFunction)
         return res.redirect('/');
     } catch (error) {
         console.error('Erreur lors de la création de l\'utilisateur :', error);
-        return res.redirect('/error');
+        res.render('error', {
+            pageName: 'Error',
+            errorContent: 'Erreur lors de la création de l\'utilisateur'
+        });
     }
 }
 
@@ -79,6 +86,10 @@ export const logout = async (req: Request, res: Response, next: NextFunction) =>
             });
         });
     } catch (err) {
-        res.status(400).json({ error: err });
+        console.error('Erreur lors de la déconnexion :', err);
+        res.render('error', {
+            pageName: 'Error',
+            errorContent: 'Erreur lors de la déconnexion'
+        });
     }
 };

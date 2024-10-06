@@ -8,7 +8,10 @@ export const home = async (req: Request, res: Response, next: NextFunction) => {
         res.render('home', {pageName: 'Home', news: news});
     } catch (error) {
         console.error('Erreur lors de la récupération des annonces :', error);
-        res.status(500).send('Erreur interne du serveur.');
+        res.render('error', {
+            pageName: 'Error',
+            errorContent: 'Erreur lors de la récupération des annonces'
+        });
     }
 };
 
@@ -38,8 +41,11 @@ export const visuNewsPrivee = async (req: Request, res: Response) => {
     
         res.render('homePrivate', {pageName: 'Private Home', news: news});
     } catch (error) {
-        console.error('Erreur lors de la récupération des annonces :', error);
-        res.status(500).send('Erreur interne du serveur.');
+        console.error('Erreur lors de la récupération des annonces privées :', error);
+        res.render('error', {
+            pageName: 'Error',
+            errorContent: 'Erreur lors de la récupération des annonces privées'
+        });
     }
 }
 
@@ -48,7 +54,10 @@ export const formConsultationQuestion = async (req: Request, res: Response) => {
     const news = await NewsModel.findById(newsId);
 
     if (!news) {
-        return res.status(404).send('Annonce non trouvé');
+        return res.render('error', {
+            pageName: 'Error',
+            errorContent: 'Annonce non trouvée'
+        });
     }
 
     res.render('chat', {news, pageName: "Chat"});
@@ -59,7 +68,10 @@ export const formQuestion = async (req: Request, res: Response) => {
     const news = await NewsModel.findById(newsId);
 
     if (!news) {
-        return res.status(404).send('Annonce non trouvé');
+        return res.render('error', {
+            pageName: 'Error',
+            errorContent: 'Annonce non trouvée'
+        });
     }
 
     res.render('question', {news, pageName: "Question"});
@@ -69,12 +81,18 @@ export const formReponse = async (req: Request, res: Response) => {
     const { newsId, questionId } = req.params;
     const news = await NewsModel.findById(newsId);
     if (!news) {
-        return res.status(404).json({message: 'Annonce non trouvée.'});
+        return res.render('error', {
+            pageName: 'Error',
+            errorContent: 'Annonce non trouvée'
+        });
     }
 
     const question = news.questions.id(questionId);
     if (!question) {
-        return res.status(404).json({message: 'Question non trouvée.'});
+        return res.render('error', {
+            pageName: 'Error',
+            errorContent: 'Question non trouvée'
+        });
     }
 
     res.render('reponse', {news, question, pageName: 'Réponse' });
@@ -85,7 +103,10 @@ export const formEdit = async (req: Request, res: Response) => {
     const news = await NewsModel.findById(newsId);
 
     if (!news) {
-        return res.status(404).send('Annonce non trouvé');
+        return res.render('error', {
+            pageName: 'Error',
+            errorContent: 'Annonce non trouvée'
+        });
     }
 
     res.render('edit', {news, pageName: 'Modification Annonce'});
