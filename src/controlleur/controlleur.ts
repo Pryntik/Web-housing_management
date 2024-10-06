@@ -36,7 +36,7 @@ export const visuNewsPrivee = async (req: Request, res: Response) => {
     try {
         const news = await NewsModel.find();
     
-        res.render('annoncePrivee', {pageName: 'Private News', news: news});
+        res.render('homePrivate', {pageName: 'Private Home', news: news});
     } catch (error) {
         console.error('Erreur lors de la récupération des annonces :', error);
         res.status(500).send('Erreur interne du serveur.');

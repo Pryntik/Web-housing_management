@@ -17,7 +17,7 @@
     <div class="logBar">
         <div class="logStatus">
             <span class="log-text"><%=logStatus == true ? 'Connected' : 'Disconnected'%></span>
-            <img class="log-icon" src="<%=logStatus == true ? '/images/logo-connected.png' : '/images/logo-disconnected.png'%>" alt="log-icon">
+            <img class="log-icon" src="<%=logStatus == true ? '/images/logo-connected.png' : '/images/logo-disconnected.png'%>" alt="log-icon" onclick="window.location='/logout';">
         </div>
     </div>
     <div class="center-gray-block w60 h60">

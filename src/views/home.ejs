@@ -9,7 +9,6 @@
                     <button class="<%=pageName == 'Home' ? 'page-active' : ''%> nav-button" onclick="window.location='/';">Home</button>
                     <button class="<%=pageName == 'News' ? 'page-active' : ''%> nav-button" onclick="window.location='/addnews';">Nouvelle annonce</button>
                     <button class="<%=pageName == 'About' ? 'page-active' : ''%> nav-button" onclick="window.location='/about';">About</button>
-                    <button class="<%=pageName == 'News Privees' ? 'page-active' : ''%> nav-button" onclick="window.location='/newsPrivees';">Annonces Privées</button>
                 </div>
                 <div class="nav-log">
                     <button class="<%=pageName == 'Signup' ? 'page-active' : ''%> nav-button" onclick="window.location='/signup';">Sign up</button>
@@ -25,10 +24,16 @@
             <div class="center-gray-block w60 h60">
                 <h1 class="app-title"><%=pageName%> page</h1>
                 <div class="news-list">
-                    <% if (news && news.length > 0) { %>
-                        <h2>Mes Annonces :</h2>
+                    <% if (logStatus && news && news.length > 0) { %>
+                        <div class="card-head-news">
+                            <h2>Mes Annonces :</h2>
+                            <button class="<%= pageName === 'Home' ? 'button-public' : 'button-private' %> button-status-news"
+                                onclick="<%=pageName === 'Home' ? 'window.location=\'/newsPrivees\';': 'window.location=\'/\';'%>">
+                                Publique
+                            </button>
+                        </div>
                             <% news.forEach(function(news) { %>
-                                <% if (news.statutPublication === 'publiee') { %>
+                                <% if (news.statutPublication === 'publique') { %>
                                     <div class="news-card">
                                         <% news.photos.forEach(function(photo) { %>
                                             <img src="data:<%= photo.contentType %>;base64,<%= photo.data.toString('base64') %>" alt="<%= news.titre %>" class="news-logo"/>
@@ -46,8 +51,10 @@
                                     </div>
                                 <% } %>
                             <% }); %>
+                    <% } else if (logStatus === false && news && news.length > 0) { %>
+                        <p>Connectez-vous pour voir vos annonces</p>
                     <% } else { %>
-                        <p>Aucune news publiée.</p>
+                        <p>Aucune news publiée</p>
                     <% } %>
                 </div>
             </div>

@@ -185,7 +185,7 @@ export const publierNews = async (req: Request, res: Response) => {
     console.log("ID de l'annonce :", req.params.id);
     try {
         // Mettre à jour l'annonce avec le statut "publiée"
-        const annonce = await NewsModel.findByIdAndUpdate(id, { statutPublication: 'publiee' });
+        const annonce = await NewsModel.findByIdAndUpdate(id, { statutPublication: 'publique' });
         if (!annonce) {
             return res.status(404).send('Annonce non trouvée');
         }
