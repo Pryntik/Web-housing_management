@@ -1,6 +1,6 @@
 <html>
     <head>
-        <link href="../styles/master.css" rel="stylesheet" type="text/css">
+        <link href="/styles/master.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <div class="app">
@@ -27,7 +27,7 @@
                     <% if (news && news.length > 0) { %>
                         <div class="card-head-news">
                             <h2>Mes Annonces :</h2>
-                            <button class="<%= pageName === 'Home' ? 'button-public' : 'button-private' %> button-status-news"
+                            <button class="<%=pageName === 'Home' ? 'button-public' : 'button-private'%> button-status-news"
                                 onclick="<%=pageName === 'Home' ? 'window.location=\'/newsPrivees\';': 'window.location=\'/\';'%>">
                                 Publique
                             </button>

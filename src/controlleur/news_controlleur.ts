@@ -85,6 +85,7 @@ export const askQuestion = async (req: Request, res: Response) => {
 
         await news.save();
 
+        res.redirect("/");
         res.status(200).json(news);
     } catch (error) {
         console.error('Erreur lors de la création de la question:', error);
@@ -122,6 +123,7 @@ export const addResponse = async (req: Request, res: Response, next: NextFunctio
         // Sauvegarder l'annonce avec la nouvelle réponse
         await news.save();
 
+        res.redirect("/");
         res.status(200).json({ message: 'Réponse ajoutée avec succès.' });
     } catch (error) {
         next(error);

@@ -1,6 +1,6 @@
 <html>
     <head>
-        <link href="../styles/master.css" rel="stylesheet" type="text/css">
+        <link href="/styles/master.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <div class="app">
@@ -25,17 +25,26 @@
                 <h1 class="login-title"><%=pageName%> page</h1>
                 <button onclick="window.location.href='/news/<%= news._id %>/questions'">Posez une question</button>
                 <% if (news.questions.length > 0) { %>
-                    <h2>Questions posées :</h2>
                         <% news.questions.forEach(question => { %>
-                            <p><strong><%= question.user.login %></strong>  le : <strong><%= question.date.toLocaleDateString()%> </strong>a demandé :</p>
-                            <p><%= question.contenu %></p>
-                            <h4>Réponses :</h4>
-                            <ul>
-                                <% question.reponses.forEach(reponse => { %>
-                                    <li><%= reponse.contenu %> - par <strong><%= reponse.user.login %></strong> le : <strong><%= reponse.date.toLocaleDateString()%></strong> </li>
-                                <% }) %>
-                            </ul>
-                            <button onclick="window.location.href='/news/<%= news._id %>/questions/<%= question._id %>'">Répondre à la question</button>
+                            <div class="question-card">
+                                <div class="question-main">
+                                    <span class="message-type">Question</span>
+                                    <span class="message-user"><%=question.user.login%></span>
+                                    <span class="message-date"><%=question.date.toLocaleDateString()%></span>
+                                </div>
+                                <p class="message-content"><%=question.contenu%></p>
+                                <button onclick="window.location.href='/news/<%= news._id %>/questions/<%= question._id %>'">Répondre</button>
+                            </div>
+                            <% question.reponses.forEach(reponse => { %>
+                                <div class="reponse-card">
+                                    <div class="reponse-main">
+                                        <span class="message-type">Réponse</span>
+                                        <span class="message-user"><%=reponse.user.login%></span>
+                                        <span class="message-date"><%=reponse.date.toLocaleDateString()%></span>
+                                    </div>
+                                    <p class="message-content"><%=reponse.contenu%></p>
+                                </div>
+                            <% }) %>
                         <% }) %>
                 <% } else { %>
                     <p>Aucune question publiée</p>
