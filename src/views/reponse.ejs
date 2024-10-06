@@ -23,14 +23,25 @@
             </div>
             <div class="center-gray-block w60 h60">
                 <h1 class="app-title"><%=pageName%> page</h1>
-                <h1>Répondre à la question</h1>
-                <h2>Annonce : <%= news.titre %></h2>
-                <p>Question : <%= question.contenu %></p>
-
+                <span class="question-title-add">Annonce : <strong><%=news.titre%></strong></span>
+                <div class="question-card">
+                    <div class="question-main">
+                        <span class="message-type">Question</span>
+                        <span class="message-user"><%=question.user.login%></span>
+                        <span class="message-date"><%=question.date.toLocaleDateString()%></span>
+                    </div>
+                    <div class="message-content">
+                        <p class="question-content"><%=question.contenu%></p>
+                    </div>
+                </div>
                 <form action="/news/<%= news._id %>/questions/<%= question._id %>/repondre" method="POST">
-                    <label for="reponse">Votre réponse :</label>
-                    <textarea name="reponse" id="reponse" rows="4" cols="50"></textarea>
-                    <button type="submit">Envoyer la réponse</button>
+                    <div class="reponse-card-add">
+                        <div class="reponse-content-add">
+                            <div class="reponse-type-add">Réponse</div>
+                            <textarea id="contenu" name="contenu" class="reponse-area-add" placeholder="Votre réponse..." required></textarea>
+                        </div>
+                        <button type="submit" class="question-submit-add">Envoyer</button>
+                    </div>
                 </form>
             </div>
         </div>

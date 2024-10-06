@@ -97,7 +97,7 @@ export const addResponse = async (req: Request, res: Response, next: NextFunctio
     const { newsId, questionId } = req.params;
     const { reponse } = req.body;
 
-    const userId = req.user as IUser;
+    const user = req.user as IUser;
 
     try {
 
@@ -118,7 +118,7 @@ export const addResponse = async (req: Request, res: Response, next: NextFunctio
         }
 
         // Ajouter la réponse à la question
-        question.reponses.push({ user: userId, contenu: reponse, date: new Date() });
+        question.reponses.push({ user: user, contenu: reponse, date: new Date() });
 
         // Sauvegarder l'annonce avec la nouvelle réponse
         await news.save();

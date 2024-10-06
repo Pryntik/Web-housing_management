@@ -21,9 +21,9 @@
                     <img class="log-icon" src="<%=logStatus == true ? '/images/logo-connected.png' : '/images/logo-disconnected.png'%>" alt="log-icon" onclick="window.location='/logout';">
                 </div>
             </div>
-            <div class="center-gray-block w40 h40">
+            <div class="center-gray-block w60 h60">
                 <h1 class="login-title"><%=pageName%> page</h1>
-                <button onclick="window.location.href='/news/<%= news._id %>/questions'">Posez une question</button>
+                <button class="question-button" onclick="window.location.href='/news/<%= news._id %>/questions'">Posez une question</button>
                 <% if (news.questions.length > 0) { %>
                         <% news.questions.forEach(question => { %>
                             <div class="question-card">
@@ -32,8 +32,10 @@
                                     <span class="message-user"><%=question.user.login%></span>
                                     <span class="message-date"><%=question.date.toLocaleDateString()%></span>
                                 </div>
-                                <p class="message-content"><%=question.contenu%></p>
-                                <button onclick="window.location.href='/news/<%= news._id %>/questions/<%= question._id %>'">Répondre</button>
+                                <div class="message-content">
+                                    <p class="question-content"><%=question.contenu%></p>
+                                    <button class="reponse-button" onclick="window.location.href='/news/<%= news._id %>/questions/<%= question._id %>'">Répondre</button>
+                                </div>
                             </div>
                             <% question.reponses.forEach(reponse => { %>
                                 <div class="reponse-card">
@@ -42,7 +44,9 @@
                                         <span class="message-user"><%=reponse.user.login%></span>
                                         <span class="message-date"><%=reponse.date.toLocaleDateString()%></span>
                                     </div>
-                                    <p class="message-content"><%=reponse.contenu%></p>
+                                    <div class="message-content">
+                                        <p class="reponse-content"><%=reponse.contenu%></p>
+                                    </div>
                                 </div>
                             <% }) %>
                         <% }) %>

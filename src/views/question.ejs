@@ -23,17 +23,17 @@
             </div>
             <div class="center-gray-block w60 h60">
                 <h1 class="app-title"><%=pageName%> page</h1>
-                    <h1>Poser une question sur : <%= news.titre %></h1>
-                    
-                    <form action="/news/<%= news._id %>/ask-question" method="POST">
-                        <label for="contenu">Votre question :</label>
-                        <textarea id="contenu" name="contenu" required></textarea>
-                        <br>
-                        <button type="submit">Envoyer</button>
-                    </form>
-
+                <span class="question-title-add">Annonce : <strong><%=news.titre%></strong></span>
+                <form action="/news/<%= news._id %>/ask-question" method="POST">
+                    <div class="question-card-add">
+                        <div class="question-content-add">
+                            <div class="question-type-add">Question</div>
+                            <textarea id="contenu" name="contenu" class="question-area-add" placeholder="Votre question..." required></textarea>
+                        </div>
+                        <button type="submit" class="question-submit-add">Envoyer</button>
+                    </div>
+                </form>
             </div>
         </div>
     </body>
 </html>
-    
