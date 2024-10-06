@@ -24,7 +24,7 @@
             <div class="center-gray-block w60 h60">
                 <h1 class="app-title"><%=pageName%> page</h1>
                 <div class="news-list">
-                    <% if (logStatus && news && news.length > 0) { %>
+                    <% if (news && news.length > 0) { %>
                         <div class="card-head-news">
                             <h2>Mes Annonces :</h2>
                             <button class="<%= pageName === 'Home' ? 'button-public' : 'button-private' %> button-status-news"
@@ -51,8 +51,6 @@
                                     </div>
                                 <% } %>
                             <% }); %>
-                    <% } else if (logStatus === false && news && news.length > 0) { %>
-                        <p>Connectez-vous pour voir vos annonces</p>
                     <% } else { %>
                         <p>Aucune news publiée</p>
                     <% } %>

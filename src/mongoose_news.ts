@@ -60,7 +60,7 @@ export interface INewsImmobiliere extends Document {
 export const NewsSchema = new mongoose.Schema({
     titre: { type: String, required: true },
     typeBien: { type: String, enum: ['vente', 'location'], required: true },
-    statutPublication: { type: String, enum: ['public', 'prive'], required: true },
+    statutPublication: { type: String, enum: ['publique', 'prive'], required: true },
     statutBien: { type: String, enum: ['disponible', 'loue', 'vendu'], required: true },
     description: { type: String, required: true },
     prix: { type: Number, required: true },
