@@ -106,13 +106,13 @@ export const askQuestion = async (req: Request, res: Response) => {
 
 export const addResponse = async (req: Request, res: Response, next: NextFunction) => {
     const { newsId, questionId } = req.params;
-    const { reponse } = req.body;
+    const { contenu } = req.body;
 
     const user = req.user as IUser;
 
     try {
 
-        if (!reponse) {
+        if (!contenu) {
             return res.render('error', {
                 pageName: 'Error',
                 errorContent: 'Réponse non valide'
@@ -138,7 +138,7 @@ export const addResponse = async (req: Request, res: Response, next: NextFunctio
         }
 
         // Ajouter la réponse à la question
-        question.reponses.push({ user: user, contenu: reponse, date: new Date() });
+        question.reponses.push({ user: user, contenu: contenu, date: new Date() });
 
         // Sauvegarder l'annonce avec la nouvelle réponse
         await news.save();

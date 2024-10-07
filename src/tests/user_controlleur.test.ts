@@ -4,6 +4,7 @@ import request from 'supertest';
 import { app } from '..';
 import { UserModel } from '../mongoose_user';
 import { verifConnexion, createUser, logout } from '../controlleur/user_controlleur';
+import { NextFunction } from 'express';
 
 jest.mock('../mongoose_user');
 jest.mock('passport');
@@ -38,7 +39,7 @@ describe('Tests des utilisateurs', () => {
         it('devrait rediriger vers /error si l\'authentification échoue', async () => {
             (UserModel.findOne as jest.Mock).mockResolvedValue({ login: 'test' });
             (passport.authenticate as jest.Mock).mockImplementation((strategy, callback) => {
-                return (req, res, next) => {
+                return (req: Request, res: Response, next: NextFunction) => {
                     callback(null, false, { message: 'Invalid credentials' });
                 };
             });
@@ -55,7 +56,7 @@ describe('Tests des utilisateurs', () => {
         it('devrait rediriger vers / si l\'authentification réussit', async () => {
             (UserModel.findOne as jest.Mock).mockResolvedValue({ login: 'test' });
             (passport.authenticate as jest.Mock).mockImplementation((strategy, callback) => {
-                return (req, res, next) => {
+                return (req: Request, res: Response, next: NextFunction) => {
                     callback(null, { login: 'test' }, null);
                 };
             });

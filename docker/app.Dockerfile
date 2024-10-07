@@ -18,6 +18,9 @@
  # Construire l'application
  RUN npm run build
  
+ # Lancer les tests avant de démarrer
+ RUN npm run test
+
  # Exposer le port que l'application utilisera
  EXPOSE 3000
  
